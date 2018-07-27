@@ -4,7 +4,7 @@ const scrape = async (text) => {
   const browser = await puppeteer.launch({
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    // slowMo: 100,
+    // slowMo: 10,
   });
   const url = 'https://en.oxforddictionaries.com/';
   const BUTTON_SELECTOR = 'div.searchMain > form > fieldset > button';
@@ -13,12 +13,12 @@ const scrape = async (text) => {
   const page = await browser.newPage();
 
   page.on('console', e => console.log(e));
-  await page.goto(url);
-  // await page.goto(url, { waitUntil: 'networkidle0' });
+  await page.goto(url, { waitUntil: 'load' });
+  console.log('page loaded');
   results.push(await getDefinition(text));
-  // results.push(await getDefinition('fall'));
-  // results.push(await getDefinition('creeper'));
+  console.log('def pushed');
   browser.close();
+  console.log('browser closed');
   return results;
 
   async function getDefinition(word) {
@@ -27,7 +27,8 @@ const scrape = async (text) => {
     await page.keyboard.press('Backspace');
     await page.keyboard.type(word);
     await page.click(BUTTON_SELECTOR);
-    await page.waitForNavigation();
+    console.log('entered request');
+    await page.waitForSelector('section.gramb>.semb>li>.trg>p>span.ind');
     const result = await page.evaluate(() => {
       const def = document.querySelectorAll('section.gramb>.semb>li>.trg>p>span.ind');
       const defs = Array.prototype.reduce.call(
@@ -44,6 +45,3 @@ const scrape = async (text) => {
   }
 };
 module.exports = scrape;
-// scrape('hell of a').then(value => {
-//   console.log(value);
-// });
