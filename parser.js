@@ -1,6 +1,15 @@
 const puppeteer = require('puppeteer');
+const Rx = require('rxjs');
 
-const scrape = async (text) => {
+const pendingItems = new Rx.Subject();
+
+const addWord = (word, callback) => {
+  pendingItems.next({
+    word,
+    callback,
+  });
+};
+const scrape = async () => {
   const browser = await puppeteer.launch({
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
@@ -9,17 +18,18 @@ const scrape = async (text) => {
   const url = 'https://en.oxforddictionaries.com/';
   const BUTTON_SELECTOR = 'div.searchMain > form > fieldset > button';
   const INPUT_SELECTOR = '#query';
-  const results = [];
   const page = await browser.newPage();
 
   page.on('console', e => console.log(e));
-  await page.goto(url);
-  // await page.goto(url, { waitUntil: 'networkidle0' });
-  results.push(await getDefinition(text));
-  // results.push(await getDefinition('fall'));
-  // results.push(await getDefinition('creeper'));
-  browser.close();
-  return results;
+  await page.goto(url, { waitUntil: 'load' });
+  console.log('page loaded');
+  pendingItems.subscribe(({ word, callback }) => {
+    getDefinition(word)
+      .then(result => callback(result))
+      .catch((reason) => {
+        console.error(reason);
+      });
+  });
 
   async function getDefinition(word) {
     await page.click(INPUT_SELECTOR);
@@ -27,7 +37,8 @@ const scrape = async (text) => {
     await page.keyboard.press('Backspace');
     await page.keyboard.type(word);
     await page.click(BUTTON_SELECTOR);
-    await page.waitForNavigation();
+    console.log('entered request');
+    await page.waitForSelector('section.gramb>.semb>li>.trg>p>span.ind');
     const result = await page.evaluate(() => {
       const def = document.querySelectorAll('section.gramb>.semb>li>.trg>p>span.ind');
       const defs = Array.prototype.reduce.call(
@@ -43,7 +54,4 @@ const scrape = async (text) => {
     return result;
   }
 };
-module.exports = scrape;
-// scrape('hell of a').then(value => {
-//   console.log(value);
-// });
+module.exports = { scrape, addWord };
