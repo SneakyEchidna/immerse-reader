@@ -5,13 +5,10 @@ import App from '../components/App';
 const mapDispatchToProps = dispatch => ({
   getDefinitions: word => {
     if (word.length > 0) {
-      dispatch(getDefinitions(word));
+      dispatch(getDefinitions(word.toLowerCase().trim()));
     }
   },
 });
-// const mapStateToProps = state => ({
-//   showSpellbook: state.game.showSpellbook,
-// });
 
 const AppContainer = connect(
   null,
