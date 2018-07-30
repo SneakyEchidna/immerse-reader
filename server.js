@@ -4,10 +4,16 @@ const { addWordtoStore, getWordFromStore } = require('./firebase');
 const { scrape, addWord } = require('./parser');
 
 const app = express();
+app.set('view engine', 'pug');
+app.use('/:word', (req, res, next) => {
+  console.log('Requested word:', req.params.word);
+  next();
+});
 scrape();
 
 const port = process.env.PORT || 5000;
-app.get('/api/:word/', (req, res) => {
+
+const definitionRoute = (req, res) => {
   getWordFromStore(req.params.word).then((cachedDef) => {
     if (cachedDef) {
       res.send(cachedDef);
@@ -19,7 +25,22 @@ app.get('/api/:word/', (req, res) => {
       addWord(req.params.word, def);
     }
   });
-});
+};
+const renderDefRoute = (req, res) => {
+  getWordFromStore(req.params.word).then((defs) => {
+    if (defs) {
+      res.render('index', { defs, word: req.params.word });
+    } else {
+      const def = (defs) => {
+        addWordtoStore(req.params.word, defs);
+        res.render('index', { defs, word: req.params.word });
+      };
+      addWord(req.params.word, def);
+    }
+  });
+};
+app.get('/api/:word/', definitionRoute);
+app.get('/:word', renderDefRoute);
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));
