@@ -22,7 +22,7 @@ const scrape = async () => {
 
   page.on('console', e => console.log(e));
   await page.goto(url, { waitUntil: 'load' });
-  console.log('page loaded');
+  console.log('Parser is loaded');
   pendingItems.subscribe(({ word, callback }) => {
     getDefinition(word)
       .then(result => callback(result))
