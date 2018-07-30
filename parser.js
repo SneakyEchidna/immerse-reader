@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const Rx = require('rxjs');
 
 const pendingItems = new Rx.Subject();
-
+const { log, error } = console;
 const addWord = (word, callback) => {
   pendingItems.next({
     word,
@@ -20,14 +20,13 @@ const scrape = async () => {
   const INPUT_SELECTOR = '#query';
   const page = await browser.newPage();
 
-  page.on('console', e => console.log(e));
   await page.goto(url, { waitUntil: 'load' });
-  console.log('Parser is loaded');
+  log('Parser is loaded');
   pendingItems.subscribe(({ word, callback }) => {
     getDefinition(word)
       .then(result => callback(result))
       .catch((reason) => {
-        console.error(reason);
+        error(reason);
       });
   });
 
@@ -37,7 +36,6 @@ const scrape = async () => {
     await page.keyboard.press('Backspace');
     await page.keyboard.type(word);
     await page.click(BUTTON_SELECTOR);
-    console.log('entered request');
     await page.waitForSelector('section.gramb>.semb>li>.trg>p>span.ind');
     const result = await page.evaluate(() => {
       const def = document.querySelectorAll('section.gramb>.semb>li>.trg>p>span.ind');
