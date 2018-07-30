@@ -1,13 +1,60 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { ReactReader } from 'react-reader';
+import { debounce } from '../utils/';
 
-const Reader = () => (
-  <p>
-    We create callApi method to interact with our Express API Back-end, then we
-    call this method in componentDidMount and finally set the state to the API
-    response, which will be Hello From Express. Notice we didn’t use a fully
-    qualified URL http://localhost:5000/api/hello to call our API, even though
-    our React app runs on a different port (3000). This is because of the proxy
-    line we added to the package.json file earlier.
-  </p>
-);
+class Reader extends Component {
+  componentDidMount() {
+    window.addEventListener(
+      'resize',
+      debounce(() => {
+        setTimeout(this.loadEvents, 2000);
+      }, 2000),
+    );
+  }
+  rend = null;
+  getRendition = rend => {
+    this.rend = rend;
+  };
+  locationChange = epubcfi => {
+    this.props.setLocation(epubcfi);
+    if (!this.props.identifier)
+      this.props.setIdentifier(this.rend.book.package.metadata.identifier);
+    if (this.rend.getContents()[0] && !this.props.eventsLoaded)
+      this.props.bookLoadedEvent();
+    if (this.props.bookLoaded && !this.props.eventsLoaded) {
+      this.loadEvents();
+      this.props.eventsLoadedEvent();
+    }
+  };
+  loadEvents = () => {
+    const iframe = this.rend.getContents()[0].window;
+    iframe.onmouseup = null;
+    const mouseup = () => {
+      this.props.getDefinitions(iframe.getSelection().toString());
+    };
+    iframe.addEventListener('mouseup', mouseup, true);
+  };
+  renderLocation() {
+    this.props.location && { location: this.props.location };
+  }
+  render() {
+    return (
+      <div
+        style={{
+          position: 'relative',
+          height: '100%',
+          width: '80%',
+        }}
+      >
+        <ReactReader
+          url={'/moby.epub'}
+          title={'Moby Dick'}
+          {...this.renderLocation()}
+          locationChanged={this.locationChange}
+          getRendition={this.getRendition}
+        />
+      </div>
+    );
+  }
+}
 export default Reader;

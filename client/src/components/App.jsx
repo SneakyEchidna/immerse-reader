@@ -1,10 +1,18 @@
 import React from 'react';
 import Definitions from '../containers/Definitions';
-import Reader from './Reader';
+import Reader from '../containers/Reader';
 
 const App = ({ getDefinitions }) => {
   return (
-    <div onMouseUp={() => getDefinitions(window.getSelection().toString())}>
+    <div
+      style={{
+        position: 'absolute',
+        height: '100%',
+        width: '100%',
+        display: 'flex',
+      }}
+      onMouseUp={() => getDefinitions(window.getSelection().toString())}
+    >
       <Reader />
       <Definitions />
     </div>
