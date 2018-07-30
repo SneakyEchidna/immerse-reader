@@ -5,7 +5,11 @@ const { scrape, addWord } = require('./parser');
 
 const app = express();
 app.set('view engine', 'pug');
-app.use('/:word', (req, res, next) => {
+app.use('/api/:word', (req, res, next) => {
+  console.log('Requested word:', req.params.word);
+  next();
+});
+app.use('/definitions/:word', (req, res, next) => {
   console.log('Requested word:', req.params.word);
   next();
 });
@@ -40,7 +44,7 @@ const renderDefRoute = (req, res) => {
   });
 };
 app.get('/api/:word/', definitionRoute);
-app.get('/:word', renderDefRoute);
+app.get('/definitions/:word', renderDefRoute);
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));
