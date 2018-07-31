@@ -29,5 +29,5 @@ const readerReducer = (state = initialState, action) => {
       return state;
   }
 };
-
+export const getIdentifier = state => state.reader.identifier;
 export default readerReducer;

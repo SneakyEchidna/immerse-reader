@@ -1,7 +1,7 @@
-import { takeEvery } from 'redux-saga';
-import { fork, put, all } from 'redux-saga/effects';
-import { GET_DEFINITIONS } from '../actions/actionTypes';
+import { fork, put, all, select, takeEvery } from 'redux-saga/effects';
+import { GET_DEFINITIONS, SET_LOCATION } from '../actions/actionTypes';
 import { setDefinitions } from '../actions';
+import { getIdentifier } from '../reducers/readerReducer';
 
 function* callGetDefinitions({ payload }) {
   const callApi = async word => {
@@ -17,9 +17,18 @@ function* callGetDefinitions({ payload }) {
   yield put(setDefinitions(def));
 }
 
+function* callSetLocation({ payload }) {
+  const identifier = yield select(getIdentifier);
+  const location = payload;
+  yield localStorage.setItem(identifier, JSON.stringify(location));
+}
+
 function* getdefinitionsSaga() {
-  yield* takeEvery(GET_DEFINITIONS, callGetDefinitions);
+  yield takeEvery(GET_DEFINITIONS, callGetDefinitions);
+}
+function* setLocationSaga() {
+  yield takeEvery(SET_LOCATION, callSetLocation);
 }
 export default function* rootSaga() {
-  yield all([fork(getdefinitionsSaga)]);
+  yield all([fork(getdefinitionsSaga), fork(setLocationSaga)]);
 }

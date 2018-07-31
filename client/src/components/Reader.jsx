@@ -16,9 +16,9 @@ class Reader extends Component {
     this.rend = rend;
   };
   locationChange = epubcfi => {
-    this.props.setLocation(epubcfi);
     if (!this.props.identifier)
       this.props.setIdentifier(this.rend.book.package.metadata.identifier);
+    this.props.setLocation(epubcfi);
     if (this.rend.getContents()[0] && !this.props.eventsLoaded)
       this.props.bookLoadedEvent();
     if (this.props.bookLoaded && !this.props.eventsLoaded) {
