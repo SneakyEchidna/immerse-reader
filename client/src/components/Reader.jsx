@@ -28,7 +28,6 @@ class Reader extends Component {
     }
   };
   loadEvents = () => {
-    console.log(this.rend.getContents()[0].window);
     const iframe = this.rend.getContents()[0].window;
     iframe.onmouseup = null;
     const mouseup = () => {
