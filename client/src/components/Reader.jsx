@@ -4,6 +4,7 @@ import { debounce } from '../utils/';
 
 class Reader extends Component {
   componentDidMount() {
+    setTimeout(this.loadEvents, 3000);
     window.addEventListener(
       'resize',
       debounce(() => {
@@ -16,26 +17,27 @@ class Reader extends Component {
     this.rend = rend;
   };
   locationChange = epubcfi => {
+    this.loadEvents();
     if (!this.props.identifier)
       this.props.setIdentifier(this.rend.book.package.metadata.identifier);
-    this.props.setLocation(epubcfi);
+    if (this.props.eventsLoaded) this.props.setLocation(epubcfi);
     if (this.rend.getContents()[0] && !this.props.eventsLoaded)
       this.props.bookLoadedEvent();
     if (this.props.bookLoaded && !this.props.eventsLoaded) {
-      this.loadEvents();
       this.props.eventsLoadedEvent();
     }
   };
   loadEvents = () => {
+    console.log(this.rend.getContents()[0].window);
     const iframe = this.rend.getContents()[0].window;
     iframe.onmouseup = null;
     const mouseup = () => {
       this.props.getDefinitions(iframe.getSelection().toString());
     };
-    iframe.addEventListener('mouseup', mouseup, true);
+    iframe.onmouseup = mouseup;
   };
   renderLocation() {
-    this.props.location && { location: this.props.location };
+    if (this.props.location) return { location: this.props.location };
   }
   render() {
     return (

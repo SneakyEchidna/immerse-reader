@@ -1,6 +1,10 @@
 import { fork, put, all, select, takeEvery } from 'redux-saga/effects';
-import { GET_DEFINITIONS, SET_LOCATION } from '../actions/actionTypes';
-import { setDefinitions } from '../actions';
+import {
+  GET_DEFINITIONS,
+  SET_LOCATION,
+  SET_IDENTIFIER,
+} from '../actions/actionTypes';
+import { setDefinitions, setLocation } from '../actions';
 import { getIdentifier } from '../reducers/readerReducer';
 
 function* callGetDefinitions({ payload }) {
@@ -29,6 +33,27 @@ function* getdefinitionsSaga() {
 function* setLocationSaga() {
   yield takeEvery(SET_LOCATION, callSetLocation);
 }
+function* callSetIdentifier({ payload }) {
+  const identifier = payload;
+  let location = localStorage.getItem(identifier);
+  try {
+    yield (location = JSON.parse(location));
+  } catch (e) {
+    console.log('json parse error');
+  }
+  if (typeof location !== 'string') {
+    location = null;
+  }
+
+  yield put(setLocation(location));
+}
+function* setIdentifierSaga() {
+  yield takeEvery(SET_IDENTIFIER, callSetIdentifier);
+}
 export default function* rootSaga() {
-  yield all([fork(getdefinitionsSaga), fork(setLocationSaga)]);
+  yield all([
+    fork(setIdentifierSaga),
+    fork(getdefinitionsSaga),
+    fork(setLocationSaga),
+  ]);
 }
