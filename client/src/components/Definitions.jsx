@@ -1,20 +1,17 @@
 import React from 'react';
-import Spiner from './Spiner';
+import { List, Container, Loader } from 'semantic-ui-react';
 import uuid from 'uuid';
 
 const Definitions = ({ loading, definitions }) => {
   return (
-    <div
-      className="definitions"
-      style={{
-        position: 'relative',
-        height: '100%',
-        flex: '1',
-      }}
-    >
-      {loading ? <Spiner /> : null}
+    <div>
+      {loading ? <Loader active /> : null}
       {definitions ? (
-        <ul>{definitions.map(e => <li key={uuid()}>{e}</li>)}</ul>
+        <Container>
+          <List ordered>
+            {definitions.map(e => <List.Item key={uuid()}>{e}</List.Item>)}
+          </List>
+        </Container>
       ) : null}
     </div>
   );

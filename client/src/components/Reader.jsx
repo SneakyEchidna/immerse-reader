@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ReactReader } from 'react-reader';
-import { debounce } from '../utils/';
+import { debounce } from '../utils';
 
 class Reader extends Component {
   componentDidMount() {
@@ -28,7 +28,6 @@ class Reader extends Component {
     }
   };
   loadEvents = () => {
-    console.log(this.rend.getContents()[0].window);
     const iframe = this.rend.getContents()[0].window;
     iframe.onmouseup = null;
     const mouseup = () => {
@@ -45,7 +44,7 @@ class Reader extends Component {
         style={{
           position: 'relative',
           height: '100%',
-          width: '80%',
+          width: '100%',
         }}
       >
         <ReactReader
