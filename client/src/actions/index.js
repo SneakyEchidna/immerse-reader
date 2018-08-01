@@ -5,6 +5,10 @@ import {
   EVENTS_LOADED,
   SET_IDENTIFIER,
   SET_LOCATION,
+  SIGN_IN,
+  SIGN_OUT,
+  APP_STARTED,
+  SET_USER,
 } from './actionTypes';
 
 export const getDefinitions = word => ({
@@ -33,4 +37,19 @@ export const setIdentifier = identifier => ({
 export const setLocation = location => ({
   type: SET_LOCATION,
   payload: location,
+});
+
+export const signIn = () => ({
+  type: SIGN_IN,
+});
+
+export const signOut = () => ({
+  type: SIGN_OUT,
+});
+export const appStarted = () => ({
+  type: APP_STARTED,
+});
+export const setUser = (userName, uid) => ({
+  type: SET_USER,
+  payload: { userName: userName, uid: uid },
 });

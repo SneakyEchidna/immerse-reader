@@ -5,3 +5,7 @@ export const EVENTS_LOADED = 'EVENTS_LOADED';
 export const RESET_READER = 'RESET_READER';
 export const SET_IDENTIFIER = 'SET_IDENTIFIER';
 export const SET_LOCATION = 'SET_LOCATION';
+export const SIGN_IN = 'SIGN_IN';
+export const SIGN_OUT = 'SIGN_OUT';
+export const APP_STARTED = 'APP_STARTED';
+export const SET_USER = 'SET_USER';

@@ -1,4 +1,4 @@
-import { BOOK_LOADED } from '../actions/actionTypes';
+import { SET_USER } from '../actions/actionTypes';
 
 const initialState = {
   userName: null,
@@ -7,8 +7,12 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    // case SET_LOCATION:
-    //   return { ...state, location: action.payload };
+    case SET_USER:
+      return {
+        ...state,
+        userName: action.payload.userName,
+        uid: action.payload.uid,
+      };
     default:
       return state;
   }

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getDefinitions } from '../actions';
+import { getDefinitions, appStarted } from '../actions';
 import App from '../components/App';
 
 const mapDispatchToProps = dispatch => ({
@@ -8,6 +8,7 @@ const mapDispatchToProps = dispatch => ({
       dispatch(getDefinitions(word.toLowerCase().trim()));
     }
   },
+  appStarted: () => dispatch(appStarted()),
 });
 
 const AppContainer = connect(
