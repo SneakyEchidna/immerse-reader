@@ -9,13 +9,6 @@ import 'semantic-ui-css/semantic.min.css';
 class App extends React.Component {
   componentDidMount() {
     this.props.appStarted();
-    firebase.auth.onAuthStateChanged(authUser => {
-      if (authUser) {
-        this.props.setUser(authUser.displayName, authUser.uid);
-      } else {
-        this.props.setUser(null, null);
-      }
-    });
   }
   render() {
     return (
