@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getDefinitions, appStarted } from '../actions';
+import { getDefinitions, appStarted, setUser } from '../actions';
 import App from '../components/App';
 
 const mapDispatchToProps = dispatch => ({
@@ -9,6 +9,9 @@ const mapDispatchToProps = dispatch => ({
     }
   },
   appStarted: () => dispatch(appStarted()),
+  setUser: (name, uid) => {
+    dispatch(setUser(name, uid));
+  },
 });
 
 const AppContainer = connect(

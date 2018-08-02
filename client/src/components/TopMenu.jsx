@@ -17,7 +17,6 @@ export default class TopMenu extends Component {
       .then(result => {
         const user = result.user;
         this.db.addUser(user.uid, user.displayName, user.email, user.photoURL);
-        this.props.setUser(user.displayName, user.uid);
       })
       .catch(error => {
         const errorCode = error.code;
@@ -26,7 +25,7 @@ export default class TopMenu extends Component {
       });
   };
   signOut = () => {
-    this.auth.signOut().then(this.props.setUser(null, null));
+    this.auth.signOut();
   };
   loginButton() {
     if (this.props.uid) {
