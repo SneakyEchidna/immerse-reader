@@ -6,7 +6,7 @@ import {
 } from '../actions/actionTypes';
 import { setDefinitions, setLocation } from '../actions';
 import { getIdentifier } from '../reducers/readerReducer';
-// import { signInSaga } from './auth';
+import { signInSaga, signOutSaga } from './auth';
 import appStartedSaga from './appStartedSaga';
 
 function* callGetDefinitions({ payload }) {
@@ -56,7 +56,8 @@ function* setIdentifierSaga() {
 export default function* rootSaga() {
   yield all([
     fork(appStartedSaga),
-    // fork(signInSaga),
+    fork(signInSaga),
+    fork(signOutSaga),
     fork(setIdentifierSaga),
     fork(getdefinitionsSaga),
     fork(setLocationSaga),
