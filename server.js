@@ -23,8 +23,11 @@ const definitionRoute = (req, res) => {
       res.send(cachedDef);
     } else {
       const def = (defs) => {
+        console.log(defs);
         addWordtoStore(req.params.word, defs);
-        res.send(defs);
+        if (!defs) {
+          res.send([`No exact matches found for "${req.params.word}"`]);
+        } else res.send(defs);
       };
       addWord(req.params.word, def);
     }

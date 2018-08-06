@@ -24,5 +24,5 @@ function* callSignIn() {
   }
 }
 function* callSignOut() {
-  auth.signOut();
+  yield auth.signOut();
 }

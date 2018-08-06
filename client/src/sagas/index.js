@@ -11,10 +11,15 @@ import appStartedSaga from './appStartedSaga';
 
 function* callGetDefinitions({ payload }) {
   const callApi = async word => {
-    const response = await fetch(`/api/${word}`);
-    const body = await response.json();
-
-    if (response.status !== 200) throw Error(body.message);
+    const response = await fetch(`/api/${word}`).catch(() => [
+      `No exact matches found for "${word}"`,
+    ]);
+    let body = response;
+    try {
+      body = await response.json();
+    } catch (e) {
+      body = [`No exact matches found for "${word}"`];
+    }
 
     return body;
   };
