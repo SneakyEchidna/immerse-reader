@@ -3,6 +3,7 @@ import Definitions from '../components/Definitions';
 
 const mapStateToProps = state => ({
   definitions: state.definition.definitions,
+  word: state.definition.word,
   loading: state.definition.loading,
 });
 

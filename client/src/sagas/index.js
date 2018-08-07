@@ -25,7 +25,7 @@ function* callGetDefinitions({ payload }) {
   };
 
   const def = yield callApi(payload);
-  yield put(setDefinitions(def));
+  yield put(setDefinitions(payload, def));
 }
 
 function* callSetLocation({ payload }) {

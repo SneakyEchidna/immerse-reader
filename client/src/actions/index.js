@@ -16,9 +16,9 @@ export const getDefinitions = word => ({
   payload: word,
 });
 
-export const setDefinitions = def => ({
+export const setDefinitions = (word, definitions) => ({
   type: SET_DEFINITIONS,
-  payload: def,
+  payload: { definitions, word },
 });
 
 export const bookLoaded = () => ({
