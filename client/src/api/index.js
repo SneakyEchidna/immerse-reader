@@ -34,12 +34,17 @@ export default class Db {
   //       firebase.db.ref().update(updates);
   //     });
   // };
-  addWord = (uid, word) => {
-    firebase.db.ref(`/wordlists/${uid}/${word}`).set(word);
+  addWord = (uid, word, definitions) => {
+    firebase.db.ref(`/wordlists/${uid}/${word}`).set(definitions);
   };
-  getEventsList = () =>
+  getWordList = uid =>
     Promise.resolve(
-      this.events.once('value').then(snap => ({ ...snap.val() })),
+      firebase.db
+        .ref(`/wordlists/${uid}`)
+        .once('value')
+        .then(snap => {
+          return snap.val();
+        }),
     );
 
   signTo = (route, cb) => {

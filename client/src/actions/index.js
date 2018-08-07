@@ -10,6 +10,8 @@ import {
   APP_STARTED,
   SET_USER,
   ADD_TO_WORD_LIST,
+  LOAD_WORD_LIST,
+  SET_WORD_LIST,
 } from './actionTypes';
 
 export const getDefinitions = word => ({
@@ -55,7 +57,16 @@ export const setUser = (userName, uid) => ({
   payload: { userName: userName, uid: uid },
 });
 
-export const addWordToWordList = word => ({
+export const addWordToWordList = (word, definitions) => ({
   type: ADD_TO_WORD_LIST,
-  payload: word,
+  payload: { word, definitions },
+});
+
+export const loadWordList = () => ({
+  type: LOAD_WORD_LIST,
+});
+
+export const setWordList = wordlist => ({
+  type: SET_WORD_LIST,
+  payload: wordlist,
 });

@@ -10,7 +10,11 @@ const Definitions = ({ loading, definitions, word, addWord }) => {
         <Container>
           <Header as="h3" dividing>
             {word}
-            <Button size="mini" compact onClick={() => addWord(word)}>
+            <Button
+              size="mini"
+              compact
+              onClick={() => addWord(word, definitions)}
+            >
               +
             </Button>
           </Header>
