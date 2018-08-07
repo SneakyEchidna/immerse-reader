@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Menu } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 export default class TopMenu extends Component {
   state = { activeItem: 'home' };
@@ -19,8 +20,17 @@ export default class TopMenu extends Component {
       <div>
         <Menu pointing secondary>
           <Menu.Item
+            as={Link}
+            to="/"
             name="home"
             active={activeItem === 'home'}
+            onClick={this.handleItemClick}
+          />
+          <Menu.Item
+            as={Link}
+            to="/wordList"
+            name="word list"
+            active={activeItem === 'word list'}
             onClick={this.handleItemClick}
           />
           <Menu.Menu position="right">

@@ -5,10 +5,13 @@ import store from './store';
 import './index.css';
 import App from './containers/App';
 import registerServiceWorker from './registerServiceWorker';
+import { HashRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <HashRouter>
+      <App />
+    </HashRouter>
   </Provider>,
   document.getElementById('root'),
 );

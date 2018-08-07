@@ -1,9 +1,10 @@
 import React from 'react';
-import Definitions from '../containers/Definitions';
-import Reader from '../containers/Reader';
+import ReaderWrapper from '../components/ReaderWrapper';
+import WordList from '../components/WordList';
 import TopMenu from '../containers/TopMenu';
 import { Container, Divider, Grid, GridColumn } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
+import { Route, Switch } from 'react-router-dom';
 
 class App extends React.Component {
   componentDidMount() {
@@ -14,25 +15,10 @@ class App extends React.Component {
       <Container>
         <TopMenu />
         <Divider />
-        <Grid
-          divided
-          style={{
-            position: 'absolute',
-            height: '90%',
-          }}
-        >
-          <GridColumn
-            width={11}
-            onMouseUp={() =>
-              this.props.getDefinitions(window.getSelection().toString())
-            }
-          >
-            <Reader />
-          </GridColumn>
-          <GridColumn width={5} verticalAlign="middle">
-            <Definitions />
-          </GridColumn>
-        </Grid>
+        <Switch>
+          <Route exact path="/" component={ReaderWrapper} />
+          <Route path="/wordlist" component={WordList} />
+        </Switch>
       </Container>
     );
   }

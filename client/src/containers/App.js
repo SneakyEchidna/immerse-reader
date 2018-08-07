@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { getDefinitions, appStarted, setUser } from '../actions';
 import App from '../components/App';
+import { withRouter } from 'react-router-dom';
 
 const mapDispatchToProps = dispatch => ({
   getDefinitions: word => {
@@ -14,9 +15,11 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-const AppContainer = connect(
-  null,
-  mapDispatchToProps,
-)(App);
+const AppContainer = withRouter(
+  connect(
+    null,
+    mapDispatchToProps,
+  )(App),
+);
 
 export default AppContainer;
