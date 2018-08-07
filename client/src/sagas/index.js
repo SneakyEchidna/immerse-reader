@@ -8,6 +8,7 @@ import { setDefinitions, setLocation } from '../actions';
 import { getIdentifier } from '../reducers/readerReducer';
 import { signInSaga, signOutSaga } from './auth';
 import appStartedSaga from './appStartedSaga';
+import addToWordListSaga from './wordlistSaga';
 
 function* callGetDefinitions({ payload }) {
   const callApi = async word => {
@@ -25,7 +26,7 @@ function* callGetDefinitions({ payload }) {
   };
 
   const def = yield callApi(payload);
-  yield put(setDefinitions(def));
+  yield put(setDefinitions(payload, def));
 }
 
 function* callSetLocation({ payload }) {
@@ -66,5 +67,6 @@ export default function* rootSaga() {
     fork(setIdentifierSaga),
     fork(getdefinitionsSaga),
     fork(setLocationSaga),
+    fork(addToWordListSaga),
   ]);
 }
