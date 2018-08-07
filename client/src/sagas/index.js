@@ -8,6 +8,7 @@ import { setDefinitions, setLocation } from '../actions';
 import { getIdentifier } from '../reducers/readerReducer';
 import { signInSaga, signOutSaga } from './auth';
 import appStartedSaga from './appStartedSaga';
+import addToWordListSaga from './wordlistSaga';
 
 function* callGetDefinitions({ payload }) {
   const callApi = async word => {
@@ -66,5 +67,6 @@ export default function* rootSaga() {
     fork(setIdentifierSaga),
     fork(getdefinitionsSaga),
     fork(setLocationSaga),
+    fork(addToWordListSaga),
   ]);
 }

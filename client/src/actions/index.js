@@ -9,6 +9,7 @@ import {
   SIGN_OUT,
   APP_STARTED,
   SET_USER,
+  ADD_TO_WORD_LIST,
 } from './actionTypes';
 
 export const getDefinitions = word => ({
@@ -52,4 +53,9 @@ export const appStarted = () => ({
 export const setUser = (userName, uid) => ({
   type: SET_USER,
   payload: { userName: userName, uid: uid },
+});
+
+export const addWordToWordList = word => ({
+  type: ADD_TO_WORD_LIST,
+  payload: word,
 });

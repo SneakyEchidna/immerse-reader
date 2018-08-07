@@ -9,3 +9,4 @@ export const SIGN_IN = 'SIGN_IN';
 export const SIGN_OUT = 'SIGN_OUT';
 export const APP_STARTED = 'APP_STARTED';
 export const SET_USER = 'SET_USER';
+export const ADD_TO_WORD_LIST = 'ADD_TO_WORD_LIST';
