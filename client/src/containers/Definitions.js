@@ -8,7 +8,8 @@ const mapStateToProps = state => ({
   loading: state.definition.loading,
 });
 const mapDispatchToProps = dispatch => ({
-  addWord: word => dispatch(addWordToWordList(word)),
+  addWord: (word, definitions) =>
+    dispatch(addWordToWordList(word, definitions)),
 });
 
 const DefinitionsContainer = connect(
