@@ -3,15 +3,15 @@ import { ReactReader } from 'react-reader';
 import { debounce } from '../utils';
 
 class Reader extends Component {
-  // componentDidMount() {
-  //   setTimeout(this.loadEvents, 3000);
-  //   window.addEventListener(
-  //     'resize',
-  //     debounce(() => {
-  //       setTimeout(this.loadEvents, 2000);
-  //     }, 2000),
-  //   );
-  // }
+  componentDidMount() {
+    this.loadEvents();
+    window.addEventListener(
+      'resize',
+      debounce(() => {
+        this.loadEvents();
+      }, 2000),
+    );
+  }
   rend = null;
   getRendition = rend => {
     this.rend = rend;
@@ -28,12 +28,17 @@ class Reader extends Component {
     }
   };
   loadEvents = () => {
-    const iframe = this.rend.getContents()[0].window;
-    iframe.onmouseup = null;
-    const mouseup = () => {
-      this.props.getDefinitions(iframe.getSelection().toString());
+    const addEvents = () => {
+      const iframe = this.rend.getContents()[0].window;
+      iframe.onmouseup = null;
+      const mouseup = () => {
+        this.props.getDefinitions(iframe.getSelection().toString());
+      };
+      iframe.onmouseup = mouseup;
     };
-    iframe.onmouseup = mouseup;
+    if (this.rend) {
+      addEvents();
+    } else setTimeout(this.loadEvents, 2000);
   };
   renderLocation() {
     if (this.props.location) return { location: this.props.location };
