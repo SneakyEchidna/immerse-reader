@@ -14,14 +14,12 @@ export default class TopMenu extends Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
   isActive(location) {
     const hash = window.location.hash.substr(1);
-    console.log(hash === location);
     if (hash === location) {
       return true;
     } else return false;
   }
   render() {
     const { activeItem } = this.state;
-
     return (
       <div>
         <Menu pointing secondary>
@@ -37,6 +35,13 @@ export default class TopMenu extends Component {
             to="/wordList"
             name="word list"
             active={this.isActive('/wordList')}
+            onClick={this.handleItemClick}
+          />
+          <Menu.Item
+            as={Link}
+            to="/books"
+            name="books"
+            active={this.isActive('/books')}
             onClick={this.handleItemClick}
           />
           <Menu.Menu position="right">

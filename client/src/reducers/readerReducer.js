@@ -4,6 +4,7 @@ import {
   RESET_READER,
   SET_IDENTIFIER,
   SET_LOCATION,
+  OPEN_BOOK,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -25,6 +26,8 @@ const readerReducer = (state = initialState, action) => {
       return { ...state, identifier: action.payload };
     case SET_LOCATION:
       return { ...state, location: action.payload };
+    case OPEN_BOOK:
+      return { ...initialState };
     default:
       return state;
   }

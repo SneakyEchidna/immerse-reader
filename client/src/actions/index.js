@@ -12,6 +12,10 @@ import {
   ADD_TO_WORD_LIST,
   LOAD_WORD_LIST,
   SET_WORD_LIST,
+  LOAD_BOOKS_LIST,
+  SET_BOOKS_LIST,
+  UPLOAD_BOOK,
+  OPEN_BOOK,
 } from './actionTypes';
 
 export const getDefinitions = word => ({
@@ -69,4 +73,22 @@ export const loadWordList = () => ({
 export const setWordList = wordlist => ({
   type: SET_WORD_LIST,
   payload: wordlist,
+});
+
+export const loadBooksList = () => ({
+  type: LOAD_BOOKS_LIST,
+});
+
+export const setBooksList = booksList => ({
+  type: SET_BOOKS_LIST,
+  payload: booksList,
+});
+
+export const uploadBook = data => ({
+  type: UPLOAD_BOOK,
+  payload: data,
+});
+export const openBook = book => ({
+  type: OPEN_BOOK,
+  payload: book,
 });
