@@ -1,6 +1,7 @@
 import React from 'react';
 import ReaderWrapper from '../components/ReaderWrapper';
 import WordList from '../containers/WordList';
+import Books from '../containers/Books';
 import TopMenu from '../containers/TopMenu';
 import { Container, Divider } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
@@ -18,6 +19,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={ReaderWrapper} />
           <Route path="/wordlist" component={WordList} />
+          <Route path="/books" component={Books} />
         </Switch>
       </Container>
     );

@@ -12,3 +12,5 @@ export const SET_USER = 'SET_USER';
 export const ADD_TO_WORD_LIST = 'ADD_TO_WORD_LIST';
 export const LOAD_WORD_LIST = 'LOAD_WORD_LIST';
 export const SET_WORD_LIST = 'SET_WORD_LIST';
+export const LOAD_BOOKS_LIST = 'LOAD_BOOKS_LIST';
+export const SET_BOOKS_LIST = 'SET_BOOKS_LIST';

@@ -4,15 +4,16 @@ import {
   SET_LOCATION,
   SET_IDENTIFIER,
 } from '../actions/actionTypes';
-import { setDefinitions, setLocation } from '../actions';
+import { setDefinitions, setLocation, loadBooksList } from '../actions';
 import { getIdentifier } from '../reducers/readerReducer';
 import { signInSaga, signOutSaga } from './auth';
 import appStartedSaga from './appStartedSaga';
 import { addToWordListSaga, loadWordListSaga } from './wordlist';
+import { loadBooksListSaga } from './books';
 
 function* callGetDefinitions({ payload }) {
   const callApi = async word => {
-    const response = await fetch(`/api/${word}`).catch(() => [
+    const response = await fetch(`/api/definitions/${word}`).catch(() => [
       `No exact matches found for "${word}"`,
     ]);
     let body = response;
@@ -69,5 +70,6 @@ export default function* rootSaga() {
     fork(setLocationSaga),
     fork(addToWordListSaga),
     fork(loadWordListSaga),
+    fork(loadBooksListSaga),
   ]);
 }

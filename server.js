@@ -5,7 +5,7 @@ const { scrape, addWord } = require('./parser');
 
 const app = express();
 app.set('view engine', 'pug');
-app.use('/api/:word', (req, res, next) => {
+app.use('/api/definitions/:word', (req, res, next) => {
   console.log('Requested word:', req.params.word);
   next();
 });
@@ -18,11 +18,11 @@ scrape();
 const port = process.env.PORT || 5000;
 
 const definitionRoute = (req, res) => {
-  getWordFromStore(req.params.word).then((cachedDef) => {
+  getWordFromStore(req.params.word).then(cachedDef => {
     if (cachedDef) {
       res.send(cachedDef);
     } else {
-      const def = (defs) => {
+      const def = defs => {
         console.log(defs);
         addWordtoStore(req.params.word, defs);
         if (!defs) {
@@ -34,11 +34,11 @@ const definitionRoute = (req, res) => {
   });
 };
 const renderDefRoute = (req, res) => {
-  getWordFromStore(req.params.word).then((defs) => {
+  getWordFromStore(req.params.word).then(defs => {
     if (defs) {
       res.render('index', { defs, word: req.params.word });
     } else {
-      const def = (defs) => {
+      const def = defs => {
         addWordtoStore(req.params.word, defs);
         res.render('index', { defs, word: req.params.word });
       };
@@ -46,8 +46,12 @@ const renderDefRoute = (req, res) => {
     }
   });
 };
-app.get('/api/:word/', definitionRoute);
+const booksListRoute = (req, res) => {
+  res.send(['book', 'book1']);
+};
+app.get('/api/definitions/:word/', definitionRoute);
 app.get('/definitions/:word', renderDefRoute);
+app.get('/api/books/:uid', booksListRoute);
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));
