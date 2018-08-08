@@ -1,4 +1,4 @@
-import { SET_BOOKS_LIST, OPEN_BOOK } from '../actions/actionTypes';
+import { SET_BOOKS_LIST, OPEN_BOOK, SIGN_OUT } from '../actions/actionTypes';
 
 const initialState = {
   booksList: [],
@@ -20,6 +20,10 @@ const booksReducer = (state = initialState, action) => {
           url: action.payload.url,
           author: action.payload.author,
         },
+      };
+    case SIGN_OUT:
+      return {
+        ...initialState,
       };
     default:
       return state;

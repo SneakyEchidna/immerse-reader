@@ -61,15 +61,18 @@ const renderDefRoute = (req, res) => {
 };
 const booksListRoute = (req, res) => {
   fs.readdir(`./client/public/${req.params.uid}`, function(err, files) {
-    const data = files.map(file => {
-      const book = file.split('.')[0];
-      const url = `${req.params.uid}/${file}`;
-      const author = book.split('-')[0];
-      const name = book.split('-')[1];
-      return { url, author, name };
-    });
-    res.send(data);
-    console.log(data);
+    if (err) {
+      res.sendStatus(404);
+    } else {
+      const data = files.map(file => {
+        const book = file.split('.')[0];
+        const url = `${req.params.uid}/${file}`;
+        const author = book.split('-')[0];
+        const name = book.split('-')[1];
+        return { url, author, name };
+      });
+      res.send(data);
+    }
   });
 };
 

@@ -6,14 +6,16 @@ import { setBooksList, loadBooksList } from '../actions';
 
 function* callLoadBooksList() {
   const getBooksList = async uid => {
-    const response = await fetch(`/api/books/${uid}`).catch(e =>
-      console.log(e),
+    const response = await fetch(`/api/books/${uid}`).catch(
+      e => {},
+      // console.log(e),
     );
     let body = response;
     try {
       body = await response.json();
     } catch (e) {
-      console.log(e);
+      // console.log(e);
+      return [];
     }
 
     return body;
@@ -24,6 +26,7 @@ function* callLoadBooksList() {
     uid = yield select(getUid);
   }
   const booksList = yield getBooksList(uid);
+
   yield put(setBooksList(booksList));
 }
 
@@ -33,7 +36,7 @@ function* callUploadBook({ payload }) {
     yield take(SET_USER);
     uid = yield select(getUid);
   }
-  yield axios.post(`/api/books/${uid}`, payload);
+  yield axios.post(`/api/books/${uid}`, payload).catch(e => console.log(e));
   yield put(loadBooksList());
 }
 

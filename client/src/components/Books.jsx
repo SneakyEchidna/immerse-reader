@@ -8,7 +8,7 @@ class Books extends React.Component {
     this.props.loadBooksList();
   }
   renderBookslist() {
-    if (this.props.booksList) {
+    if (this.props.booksList.length > 0) {
       return (
         <List divided verticalAlign="middle">
           {this.props.booksList.map(book => (
