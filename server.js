@@ -1,5 +1,18 @@
 const express = require('express');
 const path = require('path');
+const multer = require('multer');
+const mkdirp = require('mkdirp');
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
+    console.log(req.body);
+    const dir = `./client/public/${req.params.uid}`;
+    mkdirp(dir, err => cb(err, dir));
+  },
+  filename(req, file, cb) {
+    cb(null, `${req.body.author}-${req.body.name}.epub`);
+  },
+});
+const upload = multer({ storage });
 const { addWordtoStore, getWordFromStore } = require('./firebase');
 const { scrape, addWord } = require('./parser');
 
@@ -49,9 +62,15 @@ const renderDefRoute = (req, res) => {
 const booksListRoute = (req, res) => {
   res.send(['book', 'book1']);
 };
+const bookUploadRoute = (req, res) => {};
 app.get('/api/definitions/:word/', definitionRoute);
 app.get('/definitions/:word', renderDefRoute);
 app.get('/api/books/:uid', booksListRoute);
+app.post('/api/books/:uid', upload.single('file'), (req, res) => {
+  const file = req.file; // file passed from client
+  const meta = req.body;
+  console.log(file, meta);
+});
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));

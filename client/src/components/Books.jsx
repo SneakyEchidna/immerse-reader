@@ -1,5 +1,6 @@
 import React from 'react';
 import uuid from 'uuid';
+import BookUpload from '../containers/BookUpload';
 
 class Books extends React.Component {
   componentDidMount() {
@@ -18,7 +19,12 @@ class Books extends React.Component {
   }
   render() {
     return (
-      <ul>{this.props.booksList.map(book => <li key={uuid()}>{book}</li>)}</ul>
+      <div>
+        <ul>
+          {this.props.booksList.map(book => <li key={uuid()}>{book}</li>)}
+        </ul>
+        <BookUpload />
+      </div>
     );
   }
 }
