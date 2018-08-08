@@ -1,10 +1,10 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const multer = require('multer');
 const mkdirp = require('mkdirp');
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    console.log(req.body);
     const dir = `./client/public/${req.params.uid}`;
     mkdirp(dir, err => cb(err, dir));
   },
@@ -60,17 +60,26 @@ const renderDefRoute = (req, res) => {
   });
 };
 const booksListRoute = (req, res) => {
-  res.send(['book', 'book1']);
+  fs.readdir(`./client/public/${req.params.uid}`, function(err, files) {
+    const data = files.map(file => {
+      const book = file.split('.')[0];
+      const url = `${req.params.uid}/${file}`;
+      const author = book.split('-')[0];
+      const name = book.split('-')[1];
+      return { url, author, name };
+    });
+    res.send(data);
+    console.log(data);
+  });
 };
-const bookUploadRoute = (req, res) => {};
+
 app.get('/api/definitions/:word/', definitionRoute);
 app.get('/definitions/:word', renderDefRoute);
 app.get('/api/books/:uid', booksListRoute);
 app.post('/api/books/:uid', upload.single('file'), (req, res) => {
-  const file = req.file; // file passed from client
-  const meta = req.body;
-  console.log(file, meta);
+  res.sendStatus(200);
 });
+
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));

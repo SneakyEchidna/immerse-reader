@@ -2,7 +2,7 @@ import { takeEvery, select, put, take } from 'redux-saga/effects';
 import axios from 'axios';
 import { getUid } from '../reducers/userReducer';
 import { LOAD_BOOKS_LIST, SET_USER, UPLOAD_BOOK } from '../actions/actionTypes';
-import { setBooksList, uploadBook } from '../actions';
+import { setBooksList, loadBooksList } from '../actions';
 
 function* callLoadBooksList() {
   const getBooksList = async uid => {
@@ -33,8 +33,8 @@ function* callUploadBook({ payload }) {
     yield take(SET_USER);
     uid = yield select(getUid);
   }
-  console.log(payload);
-  axios.post(`/api/books/${uid}`, payload);
+  yield axios.post(`/api/books/${uid}`, payload);
+  yield put(loadBooksList());
 }
 
 export function* uploadBookSaga() {

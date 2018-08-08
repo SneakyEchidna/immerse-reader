@@ -3,15 +3,15 @@ import { ReactReader } from 'react-reader';
 import { debounce } from '../utils';
 
 class Reader extends Component {
-  componentDidMount() {
-    setTimeout(this.loadEvents, 3000);
-    window.addEventListener(
-      'resize',
-      debounce(() => {
-        setTimeout(this.loadEvents, 2000);
-      }, 2000),
-    );
-  }
+  // componentDidMount() {
+  //   setTimeout(this.loadEvents, 3000);
+  //   window.addEventListener(
+  //     'resize',
+  //     debounce(() => {
+  //       setTimeout(this.loadEvents, 2000);
+  //     }, 2000),
+  //   );
+  // }
   rend = null;
   getRendition = rend => {
     this.rend = rend;
@@ -38,6 +38,17 @@ class Reader extends Component {
   renderLocation() {
     if (this.props.location) return { location: this.props.location };
   }
+  renderReader() {
+    return (
+      <ReactReader
+        url={this.props.currentBook.url}
+        title={this.props.currentBook.name}
+        {...this.renderLocation()}
+        locationChanged={this.locationChange}
+        getRendition={this.getRendition}
+      />
+    );
+  }
   render() {
     return (
       <div
@@ -47,13 +58,7 @@ class Reader extends Component {
           width: '100%',
         }}
       >
-        <ReactReader
-          url={'/moby.epub'}
-          title={'Moby Dick'}
-          {...this.renderLocation()}
-          locationChanged={this.locationChange}
-          getRendition={this.getRendition}
-        />
+        {this.props.currentBook && this.renderReader()}
       </div>
     );
   }

@@ -15,3 +15,4 @@ export const SET_WORD_LIST = 'SET_WORD_LIST';
 export const LOAD_BOOKS_LIST = 'LOAD_BOOKS_LIST';
 export const SET_BOOKS_LIST = 'SET_BOOKS_LIST';
 export const UPLOAD_BOOK = 'UPLOAD_BOOK';
+export const OPEN_BOOK = 'OPEN_BOOK';
