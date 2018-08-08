@@ -1,4 +1,8 @@
-import { SET_DEFINITIONS, GET_DEFINITIONS } from '../actions/actionTypes';
+import {
+  SET_DEFINITIONS,
+  GET_DEFINITIONS,
+  SIGN_OUT,
+} from '../actions/actionTypes';
 
 const initialState = {
   showDefinition: true,
@@ -18,6 +22,10 @@ const definitionReducer = (state = initialState, action) => {
       };
     case GET_DEFINITIONS:
       return { ...state, loading: true };
+    case SIGN_OUT:
+      return {
+        ...initialState,
+      };
     default:
       return state;
   }

@@ -1,4 +1,4 @@
-import { SET_USER } from '../actions/actionTypes';
+import { SET_USER, SIGN_OUT } from '../actions/actionTypes';
 
 const initialState = {
   userName: null,
@@ -12,6 +12,10 @@ const userReducer = (state = initialState, action) => {
         ...state,
         userName: action.payload.userName,
         uid: action.payload.uid,
+      };
+    case SIGN_OUT:
+      return {
+        ...initialState,
       };
     default:
       return state;

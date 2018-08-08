@@ -5,6 +5,7 @@ import {
   SET_IDENTIFIER,
   SET_LOCATION,
   OPEN_BOOK,
+  SIGN_OUT,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -28,6 +29,10 @@ const readerReducer = (state = initialState, action) => {
       return { ...state, location: action.payload };
     case OPEN_BOOK:
       return { ...initialState };
+    case SIGN_OUT:
+      return {
+        ...initialState,
+      };
     default:
       return state;
   }
