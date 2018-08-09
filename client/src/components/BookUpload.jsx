@@ -15,7 +15,7 @@ class BookUpload extends React.Component {
     data.append('file', this.fileRef.current.files[0]);
     this.props.uploadBook(data);
     event.preventDefault();
-    this.setState = { author: '', name: '' };
+    this.setState({ author: '', name: '' });
   };
 
   render() {
