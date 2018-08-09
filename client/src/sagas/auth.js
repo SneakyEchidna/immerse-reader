@@ -1,4 +1,4 @@
-import { takeEvery, put } from 'redux-saga/effects';
+import { takeEvery } from 'redux-saga/effects';
 import { SIGN_IN, SIGN_OUT } from '../actions/actionTypes';
 import { auth } from '../firebase';
 import Db from '../api';

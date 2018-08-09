@@ -19,7 +19,6 @@ export default class TopMenu extends Component {
     } else return false;
   }
   render() {
-    const { activeItem } = this.state;
     return (
       <div>
         <Menu pointing secondary>

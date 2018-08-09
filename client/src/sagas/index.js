@@ -4,7 +4,7 @@ import {
   SET_LOCATION,
   SET_IDENTIFIER,
 } from '../actions/actionTypes';
-import { setDefinitions, setLocation, loadBooksList } from '../actions';
+import { setDefinitions, setLocation } from '../actions';
 import { getIdentifier } from '../reducers/readerReducer';
 import { signInSaga, signOutSaga } from './auth';
 import appStartedSaga from './appStartedSaga';
