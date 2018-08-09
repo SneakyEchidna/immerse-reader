@@ -1,7 +1,7 @@
 import React from 'react';
 import uuid from 'uuid';
 import BookUpload from '../containers/BookUpload';
-import { List } from 'semantic-ui-react';
+import { List, Icon, Grid, Container, Label, Divider } from 'semantic-ui-react';
 
 class Books extends React.Component {
   componentDidMount() {
@@ -10,9 +10,10 @@ class Books extends React.Component {
   renderBookslist() {
     if (this.props.booksList.length > 0) {
       return (
-        <List divided verticalAlign="middle">
+        <List label="books" divided verticalAlign="middle">
           {this.props.booksList.map(book => (
             <List.Item key={uuid()} name={book.name} author={book.author}>
+              <Icon circular name="book" />
               <List.Content className="content">
                 <List.Header
                   as="a"
@@ -24,15 +25,21 @@ class Books extends React.Component {
         </List>
       );
     } else {
-      return <div>There are no books to display</div>;
+      return (
+        <List>
+          <List.Item>There are no books to display</List.Item>
+        </List>
+      );
     }
   }
   render() {
     return (
-      <div>
-        {this.renderBookslist()}
-        <BookUpload />
-      </div>
+      <Grid divided>
+        <Grid.Column width={11}>{this.renderBookslist()}</Grid.Column>
+        <Grid.Column width={5}>
+          <BookUpload />
+        </Grid.Column>
+      </Grid>
     );
   }
 }
