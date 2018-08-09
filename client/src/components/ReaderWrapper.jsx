@@ -14,7 +14,7 @@ const ReaderWrapper = () => (
     <GridColumn width={11}>
       <Reader />
     </GridColumn>
-    <GridColumn width={5} verticalAlign="middle">
+    <GridColumn width={5}>
       <Definitions />
     </GridColumn>
   </Grid>
