@@ -9,7 +9,13 @@ const storage = multer.diskStorage({
     mkdirp(dir, err => cb(err, dir));
   },
   filename(req, file, cb) {
-    cb(null, `${req.body.author}-${req.body.name}.epub`);
+    cb(
+      null,
+      `${req.body.author.replace(/ /g, '_')}-${req.body.name.replace(
+        / /g,
+        '_',
+      )}.epub`,
+    );
   },
 });
 const upload = multer({ storage });
@@ -65,8 +71,8 @@ const booksListRoute = (req, res) => {
       res.sendStatus(404);
     } else {
       const data = files.map(file => {
-        const book = file.split('.')[0];
         const url = `${req.params.uid}/${file}`;
+        const book = file.replace(/\.epub$/, '').replace(/_/g, ' ');
         const author = book.split('-')[0];
         const name = book.split('-')[1];
         return { url, author, name };
