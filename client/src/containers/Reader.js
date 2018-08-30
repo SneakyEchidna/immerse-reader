@@ -32,6 +32,7 @@ const mapStateToProps = state => ({
   eventsLoaded: state.reader.eventsLoaded,
   location: state.reader.location,
   identifier: state.reader.identifier,
+  currentBook: state.books.currentBook,
 });
 
 const ReaderContainer = connect(

@@ -4,11 +4,11 @@ import { debounce } from '../utils';
 
 class Reader extends Component {
   componentDidMount() {
-    setTimeout(this.loadEvents, 3000);
+    this.loadEvents();
     window.addEventListener(
       'resize',
       debounce(() => {
-        setTimeout(this.loadEvents, 2000);
+        this.loadEvents();
       }, 2000),
     );
   }
@@ -28,15 +28,31 @@ class Reader extends Component {
     }
   };
   loadEvents = () => {
-    const iframe = this.rend.getContents()[0].window;
-    iframe.onmouseup = null;
-    const mouseup = () => {
-      this.props.getDefinitions(iframe.getSelection().toString());
+    const addEvents = () => {
+      const iframe = this.rend.getContents()[0].window;
+      iframe.onmouseup = null;
+      const mouseup = () => {
+        this.props.getDefinitions(iframe.getSelection().toString());
+      };
+      iframe.onmouseup = mouseup;
     };
-    iframe.onmouseup = mouseup;
+    if (this.rend) {
+      addEvents();
+    } else setTimeout(this.loadEvents, 2000);
   };
   renderLocation() {
     if (this.props.location) return { location: this.props.location };
+  }
+  renderReader() {
+    return (
+      <ReactReader
+        url={this.props.currentBook.url}
+        title={this.props.currentBook.name}
+        {...this.renderLocation()}
+        locationChanged={this.locationChange}
+        getRendition={this.getRendition}
+      />
+    );
   }
   render() {
     return (
@@ -47,13 +63,7 @@ class Reader extends Component {
           width: '100%',
         }}
       >
-        <ReactReader
-          url={'/moby.epub'}
-          title={'Moby Dick'}
-          {...this.renderLocation()}
-          locationChanged={this.locationChange}
-          getRendition={this.getRendition}
-        />
+        {this.props.currentBook && this.renderReader()}
       </div>
     );
   }
