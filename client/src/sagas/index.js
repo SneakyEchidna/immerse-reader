@@ -1,25 +1,76 @@
-import { takeEvery } from 'redux-saga';
-import { fork, put, all } from 'redux-saga/effects';
-import { GET_DEFINITIONS } from '../actions/actionTypes';
-import { setDefinitions } from '../actions';
+import { fork, put, all, select, takeEvery } from 'redux-saga/effects';
+import {
+  GET_DEFINITIONS,
+  SET_LOCATION,
+  SET_IDENTIFIER,
+} from '../actions/actionTypes';
+import { setDefinitions, setLocation } from '../actions';
+import { getIdentifier } from '../reducers/readerReducer';
+import { signInSaga, signOutSaga } from './auth';
+import appStartedSaga from './appStartedSaga';
+import { addToWordListSaga, loadWordListSaga } from './wordlist';
+import { loadBooksListSaga, uploadBookSaga } from './books';
 
 function* callGetDefinitions({ payload }) {
   const callApi = async word => {
-    const response = await fetch(`/api/${word}`);
-    const body = await response.json();
-
-    if (response.status !== 200) throw Error(body.message);
+    const response = await fetch(`/api/definitions/${word}`).catch(() => [
+      `No exact matches found for "${word}"`,
+    ]);
+    let body = response;
+    try {
+      body = await response.json();
+    } catch (e) {
+      body = [`No exact matches found for "${word}"`];
+    }
 
     return body;
   };
 
   const def = yield callApi(payload);
-  yield put(setDefinitions(def));
+  yield put(setDefinitions(payload, def));
+}
+
+function* callSetLocation({ payload }) {
+  const identifier = yield select(getIdentifier);
+  const location = payload;
+  yield localStorage.setItem(identifier, JSON.stringify(location));
 }
 
 function* getdefinitionsSaga() {
-  yield* takeEvery(GET_DEFINITIONS, callGetDefinitions);
+  yield takeEvery(GET_DEFINITIONS, callGetDefinitions);
 }
+function* setLocationSaga() {
+  yield takeEvery(SET_LOCATION, callSetLocation);
+}
+function* callSetIdentifier({ payload }) {
+  const identifier = payload;
+  let location = localStorage.getItem(identifier);
+  try {
+    yield (location = JSON.parse(location));
+  } catch (e) {
+    console.log('json parse error');
+  }
+  if (typeof location !== 'string') {
+    location = null;
+  }
+
+  yield put(setLocation(location));
+}
+function* setIdentifierSaga() {
+  yield takeEvery(SET_IDENTIFIER, callSetIdentifier);
+}
+
 export default function* rootSaga() {
-  yield all([fork(getdefinitionsSaga)]);
+  yield all([
+    fork(appStartedSaga),
+    fork(signInSaga),
+    fork(signOutSaga),
+    fork(setIdentifierSaga),
+    fork(getdefinitionsSaga),
+    fork(setLocationSaga),
+    fork(addToWordListSaga),
+    fork(loadWordListSaga),
+    fork(loadBooksListSaga),
+    fork(uploadBookSaga),
+  ]);
 }

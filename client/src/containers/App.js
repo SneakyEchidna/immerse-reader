@@ -1,21 +1,25 @@
 import { connect } from 'react-redux';
-import { getDefinitions } from '../actions';
+import { getDefinitions, appStarted, setUser } from '../actions';
 import App from '../components/App';
+import { withRouter } from 'react-router-dom';
 
 const mapDispatchToProps = dispatch => ({
   getDefinitions: word => {
     if (word.length > 0) {
-      dispatch(getDefinitions(word));
+      dispatch(getDefinitions(word.toLowerCase().trim()));
     }
   },
+  appStarted: () => dispatch(appStarted()),
+  setUser: (name, uid) => {
+    dispatch(setUser(name, uid));
+  },
 });
-// const mapStateToProps = state => ({
-//   showSpellbook: state.game.showSpellbook,
-// });
 
-const AppContainer = connect(
-  null,
-  mapDispatchToProps,
-)(App);
+const AppContainer = withRouter(
+  connect(
+    null,
+    mapDispatchToProps,
+  )(App),
+);
 
 export default AppContainer;

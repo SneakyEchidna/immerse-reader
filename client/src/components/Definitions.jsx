@@ -1,15 +1,41 @@
 import React from 'react';
-import Spiner from './Spiner';
+import { List, Container, Loader, Header, Button } from 'semantic-ui-react';
 import uuid from 'uuid';
 
-const Definitions = ({ loading, definitions }) => {
+const Definitions = ({ loading, definitions, word, addWord }) => {
   return (
-    <div className="definitions">
-      {loading ? <Spiner /> : null}
+    <Container
+      style={{
+        position: 'relative',
+        height: '90%',
+      }}
+    >
+      {loading ? <Loader active /> : null}
       {definitions ? (
-        <ul>{definitions.map(e => <li key={uuid()}>{e}</li>)}</ul>
+        <Container>
+          {word ? (
+            <Header as="h3" dividing>
+              {word}
+              <Button
+                size="mini"
+                compact
+                onClick={() => addWord(word, definitions)}
+              >
+                +
+              </Button>
+            </Header>
+          ) : null}
+
+          <List ordered>
+            {definitions.map(e => (
+              <List.Item key={uuid()}>
+                <List.Content>{e}</List.Content>
+              </List.Item>
+            ))}
+          </List>
+        </Container>
       ) : null}
-    </div>
+    </Container>
   );
 };
 
