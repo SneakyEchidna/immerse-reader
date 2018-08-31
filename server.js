@@ -3,9 +3,10 @@ const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
 const mkdirp = require('mkdirp');
+console.log(path.join(process.cwd()));
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    const dir = `./client/public/${req.params.uid}`;
+    const dir = path.join(process.cwd(), `/client/public/${req.params.uid}`);
     mkdirp(dir, err => cb(err, dir));
   },
   filename(req, file, cb) {
@@ -66,20 +67,26 @@ const renderDefRoute = (req, res) => {
   });
 };
 const booksListRoute = (req, res) => {
-  fs.readdir(`./client/public/${req.params.uid}`, function(err, files) {
-    if (err) {
-      res.sendStatus(404);
-    } else {
-      const data = files.map(file => {
-        const url = `${req.params.uid}/${file}`;
-        const book = file.replace(/\.epub$/, '').replace(/_/g, ' ');
-        const author = book.split('-')[0];
-        const name = book.split('-')[1];
-        return { url, author, name };
-      });
-      res.send(data);
-    }
-  });
+  fs.readdir(
+    path.join(process.cwd(), `/client/public/${req.params.uid}`),
+    function(err, files) {
+      if (err) {
+        res.sendStatus(404);
+      } else {
+        const data = files.map(file => {
+          const url = path.join(
+            process.cwd(),
+            `/client/public/${req.params.uid}/${file}`,
+          );
+          const book = file.replace(/\.epub$/, '').replace(/_/g, ' ');
+          const author = book.split('-')[0];
+          const name = book.split('-')[1];
+          return { url, author, name };
+        });
+        res.send(data);
+      }
+    },
+  );
 };
 
 app.get('/api/definitions/:word/', definitionRoute);
