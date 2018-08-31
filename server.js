@@ -5,7 +5,7 @@ const multer = require('multer');
 const mkdirp = require('mkdirp');
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    const dir = `./client/public/${req.params.uid}`;
+    const dir = `/app/client/public/${req.params.uid}`;
     mkdirp(dir, err => cb(err, dir));
   },
   filename(req, file, cb) {
@@ -66,7 +66,7 @@ const renderDefRoute = (req, res) => {
   });
 };
 const booksListRoute = (req, res) => {
-  fs.readdir(`./client/public/${req.params.uid}`, function(err, files) {
+  fs.readdir(`/app/client/public/${req.params.uid}`, function(err, files) {
     if (err) {
       res.sendStatus(404);
     } else {
