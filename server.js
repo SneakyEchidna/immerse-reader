@@ -7,7 +7,7 @@ const { addWordtoStore, getWordFromStore } = require('./firebase/');
 const { scrape, addWord } = require('./parser');
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    const dir = `./client/build/${req.params.uid}`;
+    const dir = `books/${req.params.uid}`;
     mkdirp(dir, err => cb(err, dir));
   },
   filename(req, file, cb) {
@@ -66,7 +66,7 @@ const renderDefRoute = (req, res) => {
   });
 };
 const booksListRoute = (req, res) => {
-  fs.readdir(`./client/build/${req.params.uid}`, function(err, files) {
+  fs.readdir(`books/${req.params.uid}`, function(err, files) {
     if (err) {
       res.sendStatus(404);
     } else {
@@ -91,6 +91,7 @@ app.post('/api/books/:uid', upload.single('file'), (req, res) => {
 
 // if (process.env.NODE_ENV === 'production') {
 // Serve any static files
+app.use(express.static('books'));
 app.use(express.static(path.join(__dirname, 'client/build')));
 // Handle React routing, return all requests to React app
 app.get('*', (req, res) => {
