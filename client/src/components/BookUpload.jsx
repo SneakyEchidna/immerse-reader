@@ -28,6 +28,7 @@ class BookUpload extends React.Component {
             name="name"
             value={this.state.name}
             onChange={this.handleChange}
+            required
           />
           <Form.Input
             label="Author"
@@ -35,8 +36,9 @@ class BookUpload extends React.Component {
             name="author"
             value={this.state.author}
             onChange={this.handleChange}
+            required
           />
-          <input type="file" name="file" ref={this.fileRef} />
+          <input type="file" name="file" ref={this.fileRef} accept=".epub" />
         </Form.Group>
         <Form.Button>Upload</Form.Button>
       </Form>
