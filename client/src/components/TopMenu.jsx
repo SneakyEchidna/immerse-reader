@@ -22,27 +22,31 @@ export default class TopMenu extends Component {
     return (
       <div>
         <Menu pointing secondary>
-          <Menu.Item
-            as={Link}
-            to="/"
-            name="home"
-            active={this.isActive('/')}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            as={Link}
-            to="/wordList"
-            name="word list"
-            active={this.isActive('/wordList')}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            as={Link}
-            to="/books"
-            name="books"
-            active={this.isActive('/books')}
-            onClick={this.handleItemClick}
-          />
+          {this.props.uid && (
+            <React.Fragment>
+              <Menu.Item
+                as={Link}
+                to="/"
+                name="home"
+                active={this.isActive('/')}
+                onClick={this.handleItemClick}
+              />
+              <Menu.Item
+                as={Link}
+                to="/wordList"
+                name="word list"
+                active={this.isActive('/wordList')}
+                onClick={this.handleItemClick}
+              />
+              <Menu.Item
+                as={Link}
+                to="/books"
+                name="books"
+                active={this.isActive('/books')}
+                onClick={this.handleItemClick}
+              />
+            </React.Fragment>
+          )}
           <Menu.Menu position="right">
             {this.props.userName && (
               <Menu.Item name={`Logged as ${this.props.userName}`} />
