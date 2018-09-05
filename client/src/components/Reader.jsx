@@ -46,7 +46,7 @@ class Reader extends Component {
   renderReader() {
     return (
       <ReactReader
-        url={`/${this.props.currentBook.url}`}
+        url={this.props.currentBook.book}
         title={this.props.currentBook.name}
         {...this.renderLocation()}
         locationChanged={this.locationChange}

@@ -9,7 +9,7 @@ import { getIdentifier } from '../reducers/readerReducer';
 import { signInSaga, signOutSaga } from './auth';
 import appStartedSaga from './appStartedSaga';
 import { addToWordListSaga, loadWordListSaga } from './wordlist';
-import { loadBooksListSaga, uploadBookSaga } from './books';
+import { loadBooksListSaga, uploadBookSaga, openBookSaga } from './books';
 
 function* callGetDefinitions({ payload }) {
   const callApi = async word => {
@@ -72,5 +72,6 @@ export default function* rootSaga() {
     fork(loadWordListSaga),
     fork(loadBooksListSaga),
     fork(uploadBookSaga),
+    fork(openBookSaga),
   ]);
 }

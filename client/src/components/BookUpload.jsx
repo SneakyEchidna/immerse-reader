@@ -1,7 +1,10 @@
 import React from 'react';
 import { Form } from 'semantic-ui-react';
+import { Storage } from '../api';
 
 class BookUpload extends React.Component {
+  storage = new Storage();
+
   state = { author: '', name: '' };
   fileRef = React.createRef();
   handleChange = ({ target }) => {
@@ -9,12 +12,14 @@ class BookUpload extends React.Component {
   };
   handleSubmit = event => {
     event.preventDefault();
-    const data = new FormData();
-    data.append('name', this.state.name);
-    data.append('author', this.state.author);
-    data.append('file', this.fileRef.current.files[0]);
-    this.props.uploadBook(data);
-    event.preventDefault();
+    const name = this.state.name;
+    const author = this.state.author;
+    const book = {
+      name,
+      author,
+      file: this.fileRef.current.files[0],
+    };
+    this.props.uploadBook(book);
     this.setState({ author: '', name: '' });
   };
 

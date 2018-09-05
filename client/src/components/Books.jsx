@@ -1,5 +1,4 @@
 import React from 'react';
-import uuid from 'uuid';
 import BookUpload from '../containers/BookUpload';
 import { List, Icon, Grid } from 'semantic-ui-react';
 
@@ -12,7 +11,7 @@ class Books extends React.Component {
       return (
         <List label="books" celled verticalAlign="middle">
           {this.props.booksList.map(book => (
-            <List.Item key={uuid()} name={book.name} author={book.author}>
+            <List.Item key={book.key} name={book.name} author={book.author}>
               <Icon circular name="book" />
               <List.Content className="content">
                 <List.Header

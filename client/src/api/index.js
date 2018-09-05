@@ -51,3 +51,41 @@ export default class Db {
     firebase.db.ref(route).on('value', cb);
   };
 }
+
+export class Storage {
+  addBook = (uid, { name, author, file }) => {
+    firebase.storage
+      .ref(`/books/${uid}/${name}_${author}.epub`)
+      .put(file)
+
+      .then(() =>
+        firebase.db
+          .ref(`/users/${uid}/books/${name}_${author}`)
+          .set({ name, author }),
+      );
+  };
+  getBooks = uid => {
+    return firebase.db
+      .ref(`/users/${uid}/books`)
+      .once('value')
+      .then(snap => {
+        return snap.val() || {};
+      });
+  };
+  getBook = (uid, name) => {
+    return firebase.storage
+      .ref(`/books/${uid}/${name}.epub`)
+      .getDownloadURL()
+      .catch(function(error) {
+        // Handle any errors
+        console.log(error);
+      });
+  };
+  deleteBook = (uid, key) => {
+    firebase.storage
+      .ref(`/books/${uid}/${key}.epub`)
+      .delete()
+      .then(() => firebase.db.ref(`/users/${uid}/books/${key}`).delete())
+      .catch(e => console.log(e));
+  };
+}
