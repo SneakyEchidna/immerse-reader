@@ -7,7 +7,7 @@ import { APP_STARTED } from '../actions/actionTypes';
 function* callAppStarted() {
   const channel = eventChannel(emitter => {
     firebase.auth.onAuthStateChanged(authUser =>
-      emitter(authUser || { displayName: null, uid: null }),
+      emitter(authUser || { displayName: null, uid: null })
     );
     return () => {};
   });
