@@ -5,11 +5,17 @@ import {
   SET_IDENTIFIER
 } from '../actions/actionTypes';
 import { setDefinitions, setLocation } from '../actions';
-import { getIdentifier } from '../reducers/readerReducer';
 import { signInSaga, signOutSaga } from './auth';
 import appStartedSaga from './appStartedSaga';
 import { addToWordListSaga, loadWordListSaga } from './wordlist';
-import { loadBooksListSaga, uploadBookSaga, openBookSaga } from './books';
+import {
+  loadBooksListSaga,
+  uploadBookSaga,
+  openBookSaga,
+  deleteBookSaga,
+  saveBookmarkSaga
+} from './books';
+import { getKey } from '../reducers/booksReducer';
 
 function* callGetDefinitions({ payload }) {
   const callApi = async word => {
@@ -31,9 +37,9 @@ function* callGetDefinitions({ payload }) {
 }
 
 function* callSetLocation({ payload }) {
-  const identifier = yield select(getIdentifier);
+  const key = yield select(getKey);
   const location = payload;
-  yield localStorage.setItem(identifier, JSON.stringify(location));
+  yield localStorage.setItem(key, JSON.stringify(location));
 }
 
 function* getdefinitionsSaga() {
@@ -72,6 +78,8 @@ export default function* rootSaga() {
     fork(loadWordListSaga),
     fork(loadBooksListSaga),
     fork(uploadBookSaga),
-    fork(openBookSaga)
+    fork(openBookSaga),
+    fork(deleteBookSaga),
+    fork(saveBookmarkSaga)
   ]);
 }

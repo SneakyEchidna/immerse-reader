@@ -22,7 +22,9 @@ const booksReducer = (state = initialState, action) => {
         currentBook: {
           name: action.payload.name,
           book: action.payload.book,
-          author: action.payload.author
+          author: action.payload.author,
+          key: action.payload.key,
+          bookmark: action.payload.bookmark
         }
       };
     case SIGN_OUT:
@@ -33,5 +35,5 @@ const booksReducer = (state = initialState, action) => {
       return state;
   }
 };
-
+export const getKey = state => state.books.currentBook.key;
 export default booksReducer;

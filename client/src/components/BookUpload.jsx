@@ -14,14 +14,14 @@ class BookUpload extends React.Component {
     this.setState(state => ({ ...state, [target.name]: target.value }));
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = event => {
     event.preventDefault();
     const { name, author } = this.state;
     const { uploadBook } = this.props;
     const book = {
       name,
       author,
-      file: this.fileRef.current.files[0],
+      file: this.fileRef.current.files[0]
     };
     uploadBook(book);
     this.setState({ author: '', name: '' });
@@ -48,7 +48,13 @@ class BookUpload extends React.Component {
             onChange={this.handleChange}
             required
           />
-          <input type="file" name="file" ref={this.fileRef} accept=".epub" />
+          <input
+            type="file"
+            name="file"
+            ref={this.fileRef}
+            accept=".epub"
+            required
+          />
         </Form.Group>
         <Form.Button>Upload</Form.Button>
       </Form>
