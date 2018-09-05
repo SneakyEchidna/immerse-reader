@@ -5,14 +5,14 @@ import {
   SET_IDENTIFIER,
   SET_LOCATION,
   OPEN_BOOK,
-  SIGN_OUT,
+  SIGN_OUT
 } from '../actions/actionTypes';
 
 const initialState = {
   bookLoaded: false,
   eventsLoaded: false,
   location: null,
-  identifier: null,
+  identifier: null
 };
 
 const readerReducer = (state = initialState, action) => {
@@ -31,7 +31,7 @@ const readerReducer = (state = initialState, action) => {
       return { ...initialState };
     case SIGN_OUT:
       return {
-        ...initialState,
+        ...initialState
       };
     default:
       return state;

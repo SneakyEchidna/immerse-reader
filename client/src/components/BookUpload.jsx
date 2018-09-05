@@ -3,27 +3,32 @@ import { Form } from 'semantic-ui-react';
 import { Storage } from '../api';
 
 class BookUpload extends React.Component {
-  storage = new Storage();
+  constructor() {
+    super();
+    this.state = { author: '', name: '' };
+    this.storage = new Storage();
+    this.fileRef = React.createRef();
+  }
 
-  state = { author: '', name: '' };
-  fileRef = React.createRef();
   handleChange = ({ target }) => {
     this.setState(state => ({ ...state, [target.name]: target.value }));
   };
-  handleSubmit = event => {
+
+  handleSubmit = (event) => {
     event.preventDefault();
-    const name = this.state.name;
-    const author = this.state.author;
+    const { name, author } = this.state;
+    const { uploadBook } = this.props;
     const book = {
       name,
       author,
       file: this.fileRef.current.files[0],
     };
-    this.props.uploadBook(book);
+    uploadBook(book);
     this.setState({ author: '', name: '' });
   };
 
   render() {
+    const { name, author } = this.state;
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Group grouped>
@@ -31,7 +36,7 @@ class BookUpload extends React.Component {
             label="Book name"
             type="text"
             name="name"
-            value={this.state.name}
+            value={name}
             onChange={this.handleChange}
             required
           />
@@ -39,7 +44,7 @@ class BookUpload extends React.Component {
             label="Author"
             type="text"
             name="author"
-            value={this.state.author}
+            value={author}
             onChange={this.handleChange}
             required
           />

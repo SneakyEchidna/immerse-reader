@@ -4,12 +4,6 @@ import { auth } from '../firebase';
 import Db from '../api';
 
 const db = new Db();
-export function* signInSaga() {
-  yield takeEvery(SIGN_IN, callSignIn);
-}
-export function* signOutSaga() {
-  yield takeEvery(SIGN_OUT, callSignOut);
-}
 
 function* callSignIn() {
   try {
@@ -25,4 +19,11 @@ function* callSignIn() {
 }
 function* callSignOut() {
   yield auth.signOut();
+}
+
+export function* signInSaga() {
+  yield takeEvery(SIGN_IN, callSignIn);
+}
+export function* signOutSaga() {
+  yield takeEvery(SIGN_OUT, callSignOut);
 }

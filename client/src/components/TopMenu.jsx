@@ -3,54 +3,58 @@ import { Menu } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 export default class TopMenu extends Component {
-  state = { activeItem: 'home' };
-  loginButton() {
-    if (this.props.uid) {
-      return <Menu.Item name="log out" onClick={this.props.signOut} />;
-    } else {
-      return <Menu.Item name="log in" onClick={this.props.signIn} />;
-    }
-  }
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
-  isActive(location) {
+  static isActive(location) {
     const hash = window.location.hash.substr(1);
     if (hash === location) {
       return true;
-    } else return false;
+    }
+    return false;
   }
+
+  state = { activeItem: 'home' };
+
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+
+  loginButton() {
+    const { uid, signIn, signOut } = this.props;
+    if (uid) {
+      return <Menu.Item name="log out" onClick={signOut} />;
+    }
+    return <Menu.Item name="log in" onClick={signIn} />;
+  }
+
   render() {
+    const { uid, userName } = this.props;
     return (
       <div>
         <Menu pointing secondary>
-          {this.props.uid && (
+          {uid && (
             <React.Fragment>
               <Menu.Item
                 as={Link}
                 to="/"
                 name="home"
-                active={this.isActive('/')}
+                active={TopMenu.isActive('/')}
                 onClick={this.handleItemClick}
               />
               <Menu.Item
                 as={Link}
                 to="/wordList"
                 name="word list"
-                active={this.isActive('/wordList')}
+                active={TopMenu.isActive('/wordList')}
                 onClick={this.handleItemClick}
               />
               <Menu.Item
                 as={Link}
                 to="/books"
                 name="books"
-                active={this.isActive('/books')}
+                active={TopMenu.isActive('/books')}
                 onClick={this.handleItemClick}
               />
             </React.Fragment>
           )}
           <Menu.Menu position="right">
-            {this.props.userName && (
-              <Menu.Item name={`Logged as ${this.props.userName}`} />
-            )}
+            {userName && <Menu.Item name={`Logged as ${userName}`} />}
             {this.loginButton()}
           </Menu.Menu>
         </Menu>

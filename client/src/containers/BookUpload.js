@@ -5,11 +5,11 @@ import BookUpload from '../components/BookUpload';
 const mapDispatchToProps = dispatch => ({
   uploadBook: data => {
     dispatch(uploadBook(data));
-  },
+  }
 });
 const BookUploadContainer = connect(
   null,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(BookUpload);
 
 export default BookUploadContainer;

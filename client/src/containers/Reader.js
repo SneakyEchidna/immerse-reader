@@ -4,7 +4,7 @@ import {
   eventsLoaded,
   bookLoaded,
   setIdentifier,
-  setLocation,
+  setLocation
 } from '../actions';
 import Reader from '../components/Reader';
 
@@ -25,19 +25,19 @@ const mapDispatchToProps = dispatch => ({
   },
   setLocation: loc => {
     dispatch(setLocation(loc));
-  },
+  }
 });
 const mapStateToProps = state => ({
   bookLoaded: state.reader.bookLoaded,
   eventsLoaded: state.reader.eventsLoaded,
   location: state.reader.location,
   identifier: state.reader.identifier,
-  currentBook: state.books.currentBook,
+  currentBook: state.books.currentBook
 });
 
 const ReaderContainer = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Reader);
 
 export default ReaderContainer;

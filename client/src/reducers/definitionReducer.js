@@ -1,14 +1,14 @@
 import {
   SET_DEFINITIONS,
   GET_DEFINITIONS,
-  SIGN_OUT,
+  SIGN_OUT
 } from '../actions/actionTypes';
 
 const initialState = {
   showDefinition: true,
   word: null,
   definitions: [],
-  loading: false,
+  loading: false
 };
 
 const definitionReducer = (state = initialState, action) => {
@@ -18,13 +18,13 @@ const definitionReducer = (state = initialState, action) => {
         ...state,
         definitions: action.payload.definitions,
         word: action.payload.word,
-        loading: false,
+        loading: false
       };
     case GET_DEFINITIONS:
       return { ...state, loading: true };
     case SIGN_OUT:
       return {
-        ...initialState,
+        ...initialState
       };
     default:
       return state;

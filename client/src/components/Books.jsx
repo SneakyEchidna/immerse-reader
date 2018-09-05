@@ -1,36 +1,38 @@
 import React from 'react';
-import BookUpload from '../containers/BookUpload';
 import { List, Icon, Grid } from 'semantic-ui-react';
+import BookUpload from '../containers/BookUpload';
 
 class Books extends React.Component {
   componentDidMount() {
-    this.props.loadBooksList();
+    const { loadBooksList } = this.props;
+    loadBooksList();
   }
+
   renderBookslist() {
-    if (this.props.booksList.length > 0) {
+    const { booksList, openBook } = this.props;
+    if (booksList.length > 0) {
       return (
         <List label="books" celled verticalAlign="middle">
-          {this.props.booksList.map(book => (
+          {booksList.map(book => (
             <List.Item key={book.key} name={book.name} author={book.author}>
               <Icon circular name="book" />
               <List.Content className="content">
-                <List.Header
-                  as="a"
-                  onClick={() => this.props.openBook(book)}
-                >{`${book.name} - ${book.author}`}</List.Header>
+                <List.Header as="a" onClick={() => openBook(book)}>
+                  {`${book.name} - ${book.author}`}
+                </List.Header>
               </List.Content>
             </List.Item>
           ))}
         </List>
       );
-    } else {
-      return (
-        <List>
-          <List.Item>There are no books to display</List.Item>
-        </List>
-      );
     }
+    return (
+      <List>
+        <List.Item>There are no books to display</List.Item>
+      </List>
+    );
   }
+
   render() {
     return (
       <Grid divided>

@@ -4,7 +4,7 @@ import {
   LOAD_BOOKS_LIST,
   SET_USER,
   UPLOAD_BOOK,
-  OPEN_BOOK,
+  OPEN_BOOK
 } from '../actions/actionTypes';
 import { setBooksList, loadBooksList, openBookSuccess } from '../actions';
 import { Storage } from '../api';
@@ -18,7 +18,7 @@ function* callLoadBooksList() {
     const books = entries.map(([key, value]) => ({
       name: value.name,
       author: value.author,
-      key,
+      key
     }));
     return books;
   };
