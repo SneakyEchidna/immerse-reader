@@ -93,19 +93,18 @@ function* callDeleteBook({ payload }) {
   yield put(loadBooksList());
 }
 function* callSaveBookmark({ payload }) {
-  let uid = yield select(getUid);
-  const key = yield select(getKey);
-
-  while (!uid) {
-    yield take(SET_USER);
-    uid = yield select(getUid);
-    // yield take(OPEN_BOOK_SUCCESS);
-    // key = yield select(getKey);
-  }
-  try {
-    storage.saveBookmark(uid, key, payload);
-  } catch (e) {
-    console.log(e);
+  if (payload) {
+    let uid = yield select(getUid);
+    const key = yield select(getKey);
+    while (!uid) {
+      yield take(SET_USER);
+      uid = yield select(getUid);
+    }
+    try {
+      storage.saveBookmark(uid, key, payload);
+    } catch (e) {
+      console.log(e);
+    }
   }
 }
 
