@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Icon, Grid } from 'semantic-ui-react';
+import { List, Icon, Grid, Button } from 'semantic-ui-react';
 import BookUpload from '../containers/BookUpload';
 
 class Books extends React.Component {
@@ -9,15 +9,31 @@ class Books extends React.Component {
   }
 
   renderBookslist() {
-    const { booksList, openBook } = this.props;
+    const { booksList, openBook, deleteBook, history } = this.props;
     if (booksList.length > 0) {
       return (
         <List label="books" celled verticalAlign="middle">
           {booksList.map(book => (
             <List.Item key={book.key} name={book.name} author={book.author}>
+              <List.Content floated="right">
+                <Button
+                  onClick={() => deleteBook(book.key)}
+                  negative
+                  compact
+                  circular
+                >
+                  x
+                </Button>
+              </List.Content>
               <Icon circular name="book" />
               <List.Content className="content">
-                <List.Header as="a" onClick={() => openBook(book)}>
+                <List.Header
+                  as="a"
+                  onClick={() => {
+                    openBook(book);
+                    setTimeout(history.push, 800, '/');
+                  }}
+                >
                   {`${book.name} - ${book.author}`}
                 </List.Header>
               </List.Content>

@@ -51,7 +51,7 @@ class Reader extends Component {
     };
     if (this.rend) {
       addEvents();
-    } else setTimeout(this.loadEvents, 2000);
+    } else setTimeout(this.loadEvents, 5000);
   };
 
   renderLocation() {

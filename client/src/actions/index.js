@@ -16,7 +16,8 @@ import {
   SET_BOOKS_LIST,
   UPLOAD_BOOK,
   OPEN_BOOK,
-  OPEN_BOOK_SUCCESS
+  OPEN_BOOK_SUCCESS,
+  DELETE_BOOK
 } from './actionTypes';
 
 export const getDefinitions = word => ({
@@ -95,7 +96,12 @@ export const openBook = book => ({
   payload: book
 });
 
-export const openBookSuccess = (name, author, book) => ({
+export const openBookSuccess = (name, author, book, key, bookmark) => ({
   type: OPEN_BOOK_SUCCESS,
-  payload: { name, author, book }
+  payload: { name, author, book, key, bookmark }
+});
+
+export const deleteBook = key => ({
+  type: DELETE_BOOK,
+  payload: key
 });

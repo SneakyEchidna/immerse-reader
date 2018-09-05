@@ -1,13 +1,22 @@
 import { takeEvery, select, put, take } from 'redux-saga/effects';
+import { delay } from 'redux-saga';
 import { getUid } from '../reducers/userReducer';
 import {
   LOAD_BOOKS_LIST,
   SET_USER,
   UPLOAD_BOOK,
-  OPEN_BOOK
+  OPEN_BOOK,
+  DELETE_BOOK,
+  SET_LOCATION
 } from '../actions/actionTypes';
-import { setBooksList, loadBooksList, openBookSuccess } from '../actions';
+import {
+  setBooksList,
+  loadBooksList,
+  openBookSuccess,
+  setLocation
+} from '../actions';
 import { Storage } from '../api';
+import { getKey } from '../reducers/booksReducer';
 
 const storage = new Storage();
 
@@ -18,7 +27,8 @@ function* callLoadBooksList() {
     const books = entries.map(([key, value]) => ({
       name: value.name,
       author: value.author,
-      key
+      key,
+      bookmark: value.bookmark
     }));
     return books;
   };
@@ -38,7 +48,12 @@ function* callUploadBook({ payload }) {
     yield take(SET_USER);
     uid = yield select(getUid);
   }
-  yield storage.addBook(uid, payload);
+  try {
+    yield storage.addBook(uid, payload);
+  } catch (e) {
+    console.log(e);
+  }
+  yield delay(2000);
   yield put(loadBooksList());
 }
 function* callOpenBook({ payload }) {
@@ -50,7 +65,48 @@ function* callOpenBook({ payload }) {
   }
 
   const book = yield storage.getBook(uid, payload.key);
-  yield put(openBookSuccess(payload.name, payload.author, book));
+  yield put(
+    openBookSuccess(
+      payload.name,
+      payload.author,
+      book,
+      payload.key,
+      payload.bookmark
+    )
+  );
+  yield put(setLocation(payload.bookmark));
+}
+
+function* callDeleteBook({ payload }) {
+  let uid = yield select(getUid);
+
+  while (!uid) {
+    yield take(SET_USER);
+    uid = yield select(getUid);
+  }
+  try {
+    yield storage.deleteBook(uid, payload);
+  } catch (e) {
+    console.log(e);
+  }
+  yield delay(1000);
+  yield put(loadBooksList());
+}
+function* callSaveBookmark({ payload }) {
+  let uid = yield select(getUid);
+  const key = yield select(getKey);
+
+  while (!uid) {
+    yield take(SET_USER);
+    uid = yield select(getUid);
+    // yield take(OPEN_BOOK_SUCCESS);
+    // key = yield select(getKey);
+  }
+  try {
+    storage.saveBookmark(uid, key, payload);
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export function* uploadBookSaga() {
@@ -61,4 +117,10 @@ export function* loadBooksListSaga() {
 }
 export function* openBookSaga() {
   yield takeEvery(OPEN_BOOK, callOpenBook);
+}
+export function* deleteBookSaga() {
+  yield takeEvery(DELETE_BOOK, callDeleteBook);
+}
+export function* saveBookmarkSaga() {
+  yield takeEvery(SET_LOCATION, callSaveBookmark);
 }

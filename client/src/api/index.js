@@ -69,7 +69,14 @@ export class Storage {
     firebase.storage
       .ref(`/books/${uid}/${key}.epub`)
       .delete()
-      .then(() => firebase.db.ref(`/users/${uid}/books/${key}`).delete())
+      .then(() => firebase.db.ref(`/users/${uid}/books/${key}`).remove())
+      .catch(e => console.log(e));
+  };
+
+  saveBookmark = (uid, key, bookmark) => {
+    firebase.db
+      .ref(`/users/${uid}/books/${key}/bookmark`)
+      .set(bookmark)
       .catch(e => console.log(e));
   };
 }
