@@ -10,7 +10,7 @@ export default class Db {
   addUser = (uid, displayName, email, photoURL) => {
     const user = firebase.db.ref(`/users/${uid}`);
     user.once('value').then(snap => {
-      if (!snap.node) {
+      if (!snap.val()) {
         this.users.child(uid).set({
           displayName,
           email,
