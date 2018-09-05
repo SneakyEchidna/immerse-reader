@@ -3,8 +3,7 @@ export function debounce(func, wait, immediate) {
   return function() {
     const context = this;
 
-      
-const args = arguments;
+    const args = arguments;
     const later = function() {
       timeout = null;
       if (!immediate) func.apply(context, args);
