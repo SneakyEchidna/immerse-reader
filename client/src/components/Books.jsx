@@ -9,7 +9,7 @@ class Books extends React.Component {
   }
 
   renderBookslist() {
-    const { booksList, openBook, deleteBook } = this.props;
+    const { booksList, openBook, deleteBook, history } = this.props;
     if (booksList.length > 0) {
       return (
         <List label="books" celled verticalAlign="middle">
@@ -27,7 +27,13 @@ class Books extends React.Component {
               </List.Content>
               <Icon circular name="book" />
               <List.Content className="content">
-                <List.Header as="a" onClick={() => openBook(book)}>
+                <List.Header
+                  as="a"
+                  onClick={() => {
+                    openBook(book);
+                    setTimeout(history.push, 800, '/');
+                  }}
+                >
                   {`${book.name} - ${book.author}`}
                 </List.Header>
               </List.Content>
