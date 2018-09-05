@@ -2,19 +2,25 @@ import { fork, put, all, select, takeEvery } from 'redux-saga/effects';
 import {
   GET_DEFINITIONS,
   SET_LOCATION,
-  SET_IDENTIFIER,
+  SET_IDENTIFIER
 } from '../actions/actionTypes';
 import { setDefinitions, setLocation } from '../actions';
-import { getIdentifier } from '../reducers/readerReducer';
 import { signInSaga, signOutSaga } from './auth';
 import appStartedSaga from './appStartedSaga';
 import { addToWordListSaga, loadWordListSaga } from './wordlist';
-import { loadBooksListSaga, uploadBookSaga } from './books';
+import {
+  loadBooksListSaga,
+  uploadBookSaga,
+  openBookSaga,
+  deleteBookSaga,
+  saveBookmarkSaga
+} from './books';
+import { getKey } from '../reducers/booksReducer';
 
 function* callGetDefinitions({ payload }) {
   const callApi = async word => {
     const response = await fetch(`/api/definitions/${word}`).catch(() => [
-      `No exact matches found for "${word}"`,
+      `No exact matches found for "${word}"`
     ]);
     let body = response;
     try {
@@ -31,9 +37,9 @@ function* callGetDefinitions({ payload }) {
 }
 
 function* callSetLocation({ payload }) {
-  const identifier = yield select(getIdentifier);
+  const key = yield select(getKey);
   const location = payload;
-  yield localStorage.setItem(identifier, JSON.stringify(location));
+  yield localStorage.setItem(key, JSON.stringify(location));
 }
 
 function* getdefinitionsSaga() {
@@ -72,5 +78,8 @@ export default function* rootSaga() {
     fork(loadWordListSaga),
     fork(loadBooksListSaga),
     fork(uploadBookSaga),
+    fork(openBookSaga),
+    fork(deleteBookSaga),
+    fork(saveBookmarkSaga)
   ]);
 }

@@ -1,7 +1,7 @@
 import { SET_WORD_LIST, SIGN_OUT } from '../actions/actionTypes';
 
 const initialState = {
-  wordlist: [],
+  wordlist: []
 };
 
 const wordListReducer = (state = initialState, action) => {
@@ -9,11 +9,11 @@ const wordListReducer = (state = initialState, action) => {
     case SET_WORD_LIST:
       return {
         ...state,
-        wordlist: action.payload,
+        wordlist: action.payload
       };
     case SIGN_OUT:
       return {
-        ...initialState,
+        ...initialState
       };
     default:
       return state;

@@ -1,37 +1,54 @@
 import React from 'react';
-import uuid from 'uuid';
+import { List, Icon, Grid, Button } from 'semantic-ui-react';
 import BookUpload from '../containers/BookUpload';
-import { List, Icon, Grid } from 'semantic-ui-react';
 
 class Books extends React.Component {
   componentDidMount() {
-    this.props.loadBooksList();
+    const { loadBooksList } = this.props;
+    loadBooksList();
   }
+
   renderBookslist() {
-    if (this.props.booksList.length > 0) {
+    const { booksList, openBook, deleteBook, history } = this.props;
+    if (booksList.length > 0) {
       return (
         <List label="books" celled verticalAlign="middle">
-          {this.props.booksList.map(book => (
-            <List.Item key={uuid()} name={book.name} author={book.author}>
+          {booksList.map(book => (
+            <List.Item key={book.key} name={book.name} author={book.author}>
+              <List.Content floated="right">
+                <Button
+                  onClick={() => deleteBook(book.key)}
+                  negative
+                  compact
+                  circular
+                >
+                  x
+                </Button>
+              </List.Content>
               <Icon circular name="book" />
               <List.Content className="content">
                 <List.Header
                   as="a"
-                  onClick={() => this.props.openBook(book)}
-                >{`${book.name} - ${book.author}`}</List.Header>
+                  onClick={() => {
+                    openBook(book);
+                    setTimeout(history.push, 800, '/');
+                  }}
+                >
+                  {`${book.name} - ${book.author}`}
+                </List.Header>
               </List.Content>
             </List.Item>
           ))}
         </List>
       );
-    } else {
-      return (
-        <List>
-          <List.Item>There are no books to display</List.Item>
-        </List>
-      );
     }
+    return (
+      <List>
+        <List.Item>There are no books to display</List.Item>
+      </List>
+    );
   }
+
   render() {
     return (
       <Grid divided>

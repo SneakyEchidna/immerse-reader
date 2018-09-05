@@ -4,6 +4,6 @@ const config = {
   databaseURL: 'https://immerse-reader-b0307.firebaseio.com',
   projectId: 'immerse-reader-b0307',
   storageBucket: 'immerse-reader-b0307.appspot.com',
-  messagingSenderId: '15568065126',
+  messagingSenderId: '15568065126'
 };
 export default config;

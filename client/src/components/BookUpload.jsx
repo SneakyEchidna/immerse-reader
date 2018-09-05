@@ -1,24 +1,34 @@
 import React from 'react';
 import { Form } from 'semantic-ui-react';
+import { Storage } from '../api';
 
 class BookUpload extends React.Component {
-  state = { author: '', name: '' };
-  fileRef = React.createRef();
+  constructor() {
+    super();
+    this.state = { author: '', name: '' };
+    this.storage = new Storage();
+    this.fileRef = React.createRef();
+  }
+
   handleChange = ({ target }) => {
     this.setState(state => ({ ...state, [target.name]: target.value }));
   };
+
   handleSubmit = event => {
     event.preventDefault();
-    const data = new FormData();
-    data.append('name', this.state.name);
-    data.append('author', this.state.author);
-    data.append('file', this.fileRef.current.files[0]);
-    this.props.uploadBook(data);
-    event.preventDefault();
+    const { name, author } = this.state;
+    const { uploadBook } = this.props;
+    const book = {
+      name,
+      author,
+      file: this.fileRef.current.files[0]
+    };
+    uploadBook(book);
     this.setState({ author: '', name: '' });
   };
 
   render() {
+    const { name, author } = this.state;
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Group grouped>
@@ -26,7 +36,7 @@ class BookUpload extends React.Component {
             label="Book name"
             type="text"
             name="name"
-            value={this.state.name}
+            value={name}
             onChange={this.handleChange}
             required
           />
@@ -34,11 +44,17 @@ class BookUpload extends React.Component {
             label="Author"
             type="text"
             name="author"
-            value={this.state.author}
+            value={author}
             onChange={this.handleChange}
             required
           />
-          <input type="file" name="file" ref={this.fileRef} accept=".epub" />
+          <input
+            type="file"
+            name="file"
+            ref={this.fileRef}
+            accept=".epub"
+            required
+          />
         </Form.Group>
         <Form.Button>Upload</Form.Button>
       </Form>

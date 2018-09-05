@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
-import { loadBooksList, openBook } from '../actions';
+import { loadBooksList, openBook, deleteBook } from '../actions';
 import Books from '../components/Books';
 
 const mapStateToProps = ({ books: { booksList } }) => ({
-  booksList,
+  booksList
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -13,10 +13,13 @@ const mapDispatchToProps = dispatch => ({
   openBook: book => {
     dispatch(openBook(book));
   },
+  deleteBook: key => {
+    dispatch(deleteBook(key));
+  }
 });
 const BooksContainer = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Books);
 
 export default BooksContainer;

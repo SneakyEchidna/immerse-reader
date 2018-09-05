@@ -2,7 +2,7 @@ import { SET_USER, SIGN_OUT } from '../actions/actionTypes';
 
 const initialState = {
   userName: null,
-  uid: null,
+  uid: null
 };
 
 const userReducer = (state = initialState, action) => {
@@ -11,11 +11,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         userName: action.payload.userName,
-        uid: action.payload.uid,
+        uid: action.payload.uid
       };
     case SIGN_OUT:
       return {
-        ...initialState,
+        ...initialState
       };
     default:
       return state;

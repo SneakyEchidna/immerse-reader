@@ -8,3 +8,4 @@ if (!firebase.apps.length) {
 export const auth = firebase.auth();
 export const google = new firebase.auth.GoogleAuthProvider();
 export const db = firebase.database();
+export const storage = firebase.storage();

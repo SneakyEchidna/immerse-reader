@@ -16,3 +16,5 @@ export const LOAD_BOOKS_LIST = 'LOAD_BOOKS_LIST';
 export const SET_BOOKS_LIST = 'SET_BOOKS_LIST';
 export const UPLOAD_BOOK = 'UPLOAD_BOOK';
 export const OPEN_BOOK = 'OPEN_BOOK';
+export const OPEN_BOOK_SUCCESS = 'OPEN_BOOK_SUCCESS';
+export const DELETE_BOOK = 'DELETE_BOOK';

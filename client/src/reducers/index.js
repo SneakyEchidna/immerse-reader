@@ -10,7 +10,7 @@ const reducer = combineReducers({
   reader: readerReducer,
   user: userReducer,
   wordlist: wordListReducer,
-  books: booksReducer,
+  books: booksReducer
 });
 
 export default reducer;
