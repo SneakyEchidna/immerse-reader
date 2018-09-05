@@ -1,16 +1,18 @@
 import React from 'react';
-import ReaderWrapper from '../components/ReaderWrapper';
+import { Container, Divider } from 'semantic-ui-react';
+import { Route, Switch } from 'react-router-dom';
+import ReaderWrapper from './ReaderWrapper';
 import WordList from '../containers/WordList';
 import Books from '../containers/Books';
 import TopMenu from '../containers/TopMenu';
-import { Container, Divider } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
-import { Route, Switch } from 'react-router-dom';
 
 class App extends React.Component {
   componentDidMount() {
-    this.props.appStarted();
+    const { appStarted } = this.props;
+    appStarted();
   }
+
   render() {
     return (
       <Container>

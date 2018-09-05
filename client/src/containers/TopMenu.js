@@ -14,16 +14,16 @@ const mapDispatchToProps = dispatch => ({
   },
   loadWordList: () => {
     dispatch(loadWordList());
-  },
+  }
 });
 const mapStateToProps = ({ user: { userName }, user: { uid } }) => ({
   userName,
-  uid,
+  uid
 });
 
 const TopMenuContainer = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(TopMenu);
 
 export default TopMenuContainer;

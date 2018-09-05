@@ -3,7 +3,7 @@ import { loadBooksList, openBook } from '../actions';
 import Books from '../components/Books';
 
 const mapStateToProps = ({ books: { booksList } }) => ({
-  booksList,
+  booksList
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -12,11 +12,11 @@ const mapDispatchToProps = dispatch => ({
   },
   openBook: book => {
     dispatch(openBook(book));
-  },
+  }
 });
 const BooksContainer = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Books);
 
 export default BooksContainer;

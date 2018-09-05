@@ -16,79 +16,86 @@ import {
   SET_BOOKS_LIST,
   UPLOAD_BOOK,
   OPEN_BOOK,
+  OPEN_BOOK_SUCCESS
 } from './actionTypes';
 
 export const getDefinitions = word => ({
   type: GET_DEFINITIONS,
-  payload: word,
+  payload: word
 });
 
 export const setDefinitions = (word, definitions) => ({
   type: SET_DEFINITIONS,
-  payload: { definitions, word },
+  payload: { definitions, word }
 });
 
 export const bookLoaded = () => ({
-  type: BOOK_LOADED,
+  type: BOOK_LOADED
 });
 
 export const eventsLoaded = () => ({
-  type: EVENTS_LOADED,
+  type: EVENTS_LOADED
 });
 
 export const setIdentifier = identifier => ({
   type: SET_IDENTIFIER,
-  payload: identifier,
+  payload: identifier
 });
 
 export const setLocation = location => ({
   type: SET_LOCATION,
-  payload: location,
+  payload: location
 });
 
 export const signIn = () => ({
-  type: SIGN_IN,
+  type: SIGN_IN
 });
 
 export const signOut = () => ({
-  type: SIGN_OUT,
+  type: SIGN_OUT
 });
 export const appStarted = () => ({
-  type: APP_STARTED,
+  type: APP_STARTED
 });
 export const setUser = (userName, uid) => ({
   type: SET_USER,
-  payload: { userName: userName, uid: uid },
+  payload: { userName, uid }
 });
 
 export const addWordToWordList = (word, definitions) => ({
   type: ADD_TO_WORD_LIST,
-  payload: { word, definitions },
+  payload: { word, definitions }
 });
 
 export const loadWordList = () => ({
-  type: LOAD_WORD_LIST,
+  type: LOAD_WORD_LIST
 });
 
 export const setWordList = wordlist => ({
   type: SET_WORD_LIST,
-  payload: wordlist,
+  payload: wordlist
 });
 
 export const loadBooksList = () => ({
-  type: LOAD_BOOKS_LIST,
+  type: LOAD_BOOKS_LIST
 });
 
 export const setBooksList = booksList => ({
   type: SET_BOOKS_LIST,
-  payload: booksList,
+  payload: booksList
 });
 
 export const uploadBook = data => ({
   type: UPLOAD_BOOK,
-  payload: data,
+  payload: data
 });
+
 export const openBook = book => ({
   type: OPEN_BOOK,
-  payload: book,
+  payload: book
+});
+
+export const openBookSuccess = (name, author, book) => ({
+  type: OPEN_BOOK_SUCCESS,
+  payload: { name, author, book }
 });

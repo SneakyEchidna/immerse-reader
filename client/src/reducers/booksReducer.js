@@ -1,8 +1,12 @@
-import { SET_BOOKS_LIST, OPEN_BOOK, SIGN_OUT } from '../actions/actionTypes';
+import {
+  SET_BOOKS_LIST,
+  SIGN_OUT,
+  OPEN_BOOK_SUCCESS
+} from '../actions/actionTypes';
 
 const initialState = {
   booksList: [],
-  currentBook: null,
+  currentBook: null
 };
 
 const booksReducer = (state = initialState, action) => {
@@ -10,20 +14,20 @@ const booksReducer = (state = initialState, action) => {
     case SET_BOOKS_LIST:
       return {
         ...state,
-        booksList: action.payload,
+        booksList: action.payload
       };
-    case OPEN_BOOK:
+    case OPEN_BOOK_SUCCESS:
       return {
         ...state,
         currentBook: {
           name: action.payload.name,
-          url: action.payload.url,
-          author: action.payload.author,
-        },
+          book: action.payload.book,
+          author: action.payload.author
+        }
       };
     case SIGN_OUT:
       return {
-        ...initialState,
+        ...initialState
       };
     default:
       return state;

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { getDefinitions, appStarted, setUser } from '../actions';
 import App from '../components/App';
-import { withRouter } from 'react-router-dom';
 
 const mapDispatchToProps = dispatch => ({
   getDefinitions: word => {
@@ -12,14 +12,14 @@ const mapDispatchToProps = dispatch => ({
   appStarted: () => dispatch(appStarted()),
   setUser: (name, uid) => {
     dispatch(setUser(name, uid));
-  },
+  }
 });
 
 const AppContainer = withRouter(
   connect(
     null,
-    mapDispatchToProps,
-  )(App),
+    mapDispatchToProps
+  )(App)
 );
 
 export default AppContainer;

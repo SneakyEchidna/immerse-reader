@@ -2,19 +2,19 @@ import { fork, put, all, select, takeEvery } from 'redux-saga/effects';
 import {
   GET_DEFINITIONS,
   SET_LOCATION,
-  SET_IDENTIFIER,
+  SET_IDENTIFIER
 } from '../actions/actionTypes';
 import { setDefinitions, setLocation } from '../actions';
 import { getIdentifier } from '../reducers/readerReducer';
 import { signInSaga, signOutSaga } from './auth';
 import appStartedSaga from './appStartedSaga';
 import { addToWordListSaga, loadWordListSaga } from './wordlist';
-import { loadBooksListSaga, uploadBookSaga } from './books';
+import { loadBooksListSaga, uploadBookSaga, openBookSaga } from './books';
 
 function* callGetDefinitions({ payload }) {
   const callApi = async word => {
     const response = await fetch(`/api/definitions/${word}`).catch(() => [
-      `No exact matches found for "${word}"`,
+      `No exact matches found for "${word}"`
     ]);
     let body = response;
     try {
@@ -72,5 +72,6 @@ export default function* rootSaga() {
     fork(loadWordListSaga),
     fork(loadBooksListSaga),
     fork(uploadBookSaga),
+    fork(openBookSaga)
   ]);
 }

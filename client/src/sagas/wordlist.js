@@ -4,7 +4,7 @@ import { setWordList } from '../actions';
 import {
   ADD_TO_WORD_LIST,
   LOAD_WORD_LIST,
-  SET_USER,
+  SET_USER
 } from '../actions/actionTypes';
 import Db from '../api';
 
