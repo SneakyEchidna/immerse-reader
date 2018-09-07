@@ -4,7 +4,7 @@ import {
   SET_LOCATION,
   SET_IDENTIFIER
 } from '../actions/actionTypes';
-import { setDefinitions, setLocation } from '../actions';
+import { setDefinitions, setLocation, toggleDefinition } from '../actions';
 import { signInSaga, signOutSaga } from './auth';
 import appStartedSaga from './appStartedSaga';
 import { addToWordListSaga, loadWordListSaga } from './wordlist';
@@ -34,6 +34,7 @@ function* callGetDefinitions({ payload }) {
 
   const def = yield callApi(payload);
   yield put(setDefinitions(payload, def));
+  yield put(toggleDefinition());
 }
 
 function* callSetLocation({ payload }) {
