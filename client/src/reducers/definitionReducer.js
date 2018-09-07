@@ -1,6 +1,7 @@
 import {
   SET_DEFINITIONS,
   GET_DEFINITIONS,
+  TOGGLE_DEFINITION,
   SIGN_OUT
 } from '../actions/actionTypes';
 
@@ -25,6 +26,11 @@ const definitionReducer = (state = initialState, action) => {
     case SIGN_OUT:
       return {
         ...initialState
+      };
+    case TOGGLE_DEFINITION:
+      return {
+        ...state,
+        showDefinition: !state.showDefinition
       };
     default:
       return state;

@@ -1,5 +1,11 @@
 import { connect } from 'react-redux';
-import { signIn, signOut, setUser, loadWordList } from '../actions';
+import {
+  signIn,
+  signOut,
+  setUser,
+  loadWordList,
+  toggleDefinition
+} from '../actions';
 import TopMenu from '../components/TopMenu';
 
 const mapDispatchToProps = dispatch => ({
@@ -14,6 +20,9 @@ const mapDispatchToProps = dispatch => ({
   },
   loadWordList: () => {
     dispatch(loadWordList());
+  },
+  toggleDefinition: () => {
+    dispatch(toggleDefinition());
   }
 });
 const mapStateToProps = ({ user: { userName }, user: { uid } }) => ({
