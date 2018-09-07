@@ -18,3 +18,4 @@ export const UPLOAD_BOOK = 'UPLOAD_BOOK';
 export const OPEN_BOOK = 'OPEN_BOOK';
 export const OPEN_BOOK_SUCCESS = 'OPEN_BOOK_SUCCESS';
 export const DELETE_BOOK = 'DELETE_BOOK';
+export const TOGGLE_DEFINITION = 'TOGGLE_DEFINITION';

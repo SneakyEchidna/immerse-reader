@@ -1,7 +1,7 @@
 import React from 'react';
-import { Container, Divider } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import { Route, Switch } from 'react-router-dom';
-import ReaderWrapper from './ReaderWrapper';
+import ReaderWrapper from '../containers/ReaderWrapper';
 import WordList from '../containers/WordList';
 import Books from '../containers/Books';
 import TopMenu from '../containers/TopMenu';
@@ -15,9 +15,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container fluid>
         <TopMenu />
-        <Divider />
         <Switch>
           <Route exact path="/" component={ReaderWrapper} />
           <Route path="/wordlist" component={WordList} />

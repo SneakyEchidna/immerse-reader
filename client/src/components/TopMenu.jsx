@@ -54,7 +54,8 @@ export default class TopMenu extends Component {
             </React.Fragment>
           )}
           <Menu.Menu position="right">
-            {userName && <Menu.Item name={`Logged as ${userName}`} />}
+            <Menu.Item name="toggle" onClick={this.props.toggleDefinition} />
+            {/* {userName && <Menu.Item name={`Logged as ${userName}`} />} */}
             {this.loginButton()}
           </Menu.Menu>
         </Menu>

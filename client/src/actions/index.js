@@ -17,7 +17,8 @@ import {
   UPLOAD_BOOK,
   OPEN_BOOK,
   OPEN_BOOK_SUCCESS,
-  DELETE_BOOK
+  DELETE_BOOK,
+  TOGGLE_DEFINITION
 } from './actionTypes';
 
 export const getDefinitions = word => ({
@@ -28,6 +29,10 @@ export const getDefinitions = word => ({
 export const setDefinitions = (word, definitions) => ({
   type: SET_DEFINITIONS,
   payload: { definitions, word }
+});
+
+export const toggleDefinition = () => ({
+  type: TOGGLE_DEFINITION
 });
 
 export const bookLoaded = () => ({

@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Icon, Grid, Button } from 'semantic-ui-react';
+import { List, Icon, Grid, Button, Container } from 'semantic-ui-react';
 import BookUpload from '../containers/BookUpload';
 
 class Books extends React.Component {
@@ -32,7 +32,6 @@ class Books extends React.Component {
                   onClick={() => {
                     openBook(book);
                     setTimeout(history.push, 1000, '/');
-                    // history.push('/');
                   }}
                 >
                   {`${book.name} - ${book.author}`}
@@ -52,7 +51,7 @@ class Books extends React.Component {
 
   render() {
     return (
-      <Grid divided>
+      <Grid divided as={Container} style={{ paddingTop: '10px' }}>
         <Grid.Column width={11}>{this.renderBookslist()}</Grid.Column>
         <Grid.Column width={5}>
           <BookUpload />
