@@ -4,7 +4,7 @@ import Reader from '../containers/Reader';
 import Definitions from '../containers/Definitions';
 
 const ReaderWrapper = ({ showDefinition }) => (
-  <Sidebar.Pushable as={Segment}>
+  <Sidebar.Pushable as={Segment} vertical>
     <Sidebar
       as={Segment}
       animation="overlay"
@@ -19,9 +19,9 @@ const ReaderWrapper = ({ showDefinition }) => (
     <Sidebar.Pusher>
       <Segment
         basic
-        style={{  
+        style={{
           height: '90vh',
-          width: '90vw'
+          width: '100vw'
         }}
       >
         <Reader />

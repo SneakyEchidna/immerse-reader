@@ -55,7 +55,7 @@ export default class TopMenu extends Component {
           )}
           <Menu.Menu position="right">
             <Menu.Item name="toggle" onClick={this.props.toggleDefinition} />
-            {userName && <Menu.Item name={`Logged as ${userName}`} />}
+            {/* {userName && <Menu.Item name={`Logged as ${userName}`} />} */}
             {this.loginButton()}
           </Menu.Menu>
         </Menu>
