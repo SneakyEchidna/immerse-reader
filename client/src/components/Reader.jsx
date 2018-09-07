@@ -1,57 +1,19 @@
 import React, { Component } from 'react';
-import { ReactReader } from 'react-reader';
-import { debounce } from '../utils';
+import { ReactReader } from '@sneakyechidna/react-reader';
 
 class Reader extends Component {
-  rend = null;
-
-  componentDidMount() {
-    this.loadEvents();
-    window.addEventListener(
-      'resize',
-      debounce(() => {
-        this.loadEvents();
-      }, 2000)
-    );
-  }
-
-  getRendition = rend => {
-    this.rend = rend;
-  };
-
-  locationChange = epubcfi => {
-    const {
-      identifier,
-      eventsLoaded,
-      setIdentifier,
-      bookLoaded,
-      setLocation,
-      eventsLoadedEvent,
-      bookLoadedEvent
-    } = this.props;
-
-    this.loadEvents();
-    if (!identifier) setIdentifier(this.rend.book.package.metadata.identifier);
-    if (eventsLoaded) setLocation(epubcfi);
-    if (this.rend.getContents()[0] && !eventsLoaded) bookLoadedEvent();
-    if (bookLoaded && !eventsLoaded) {
-      eventsLoadedEvent();
+  selection = (e, contents) => {
+    if (contents) {
+      const { getDefinitions } = this.props;
+      getDefinitions(contents.window.getSelection().toString());
     }
   };
 
-  loadEvents = () => {
-    const { getDefinitions } = this.props;
-    const addEvents = () => {
-      const iframe = this.rend.getContents()[0].window;
-      iframe.onmouseup = null;
-      const mouseup = () => {
-        getDefinitions(iframe.getSelection().toString());
-      };
-      iframe.onmouseup = mouseup;
-    };
-    if (this.rend) {
-      addEvents();
-    } else setTimeout(this.loadEvents, 5000);
+  customEvents = [{ event: 'selected', callback: this.selection }];
+
+  locationChange = epubcfi => {
+    const { setLocation } = this.props;
+    setLocation(epubcfi);
   };
 
   renderLocation() {
@@ -64,13 +26,14 @@ class Reader extends Component {
       currentBook: { name },
       currentBook: { book }
     } = this.props;
+
     return (
       <ReactReader
         url={book}
         title={name}
         {...this.renderLocation()}
         locationChanged={this.locationChange}
-        getRendition={this.getRendition}
+        renditionOn={this.customEvents}
       />
     );
   }
