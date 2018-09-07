@@ -16,6 +16,17 @@ class App extends React.Component {
   render() {
     return (
       <Container fluid>
+        <style>
+          {`
+        #root > .ui.container{
+          height: 100vh;
+          margin-left: 0px!important;
+          margin-right: 0px!important;
+        }
+          
+        `}
+        </style>
+
         <TopMenu />
         <Switch>
           <Route exact path="/" component={ReaderWrapper} />

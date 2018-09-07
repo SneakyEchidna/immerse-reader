@@ -6,7 +6,7 @@ import {
 } from '../actions/actionTypes';
 
 const initialState = {
-  showDefinition: true,
+  showDefinition: false,
   word: null,
   definitions: [],
   loading: false
