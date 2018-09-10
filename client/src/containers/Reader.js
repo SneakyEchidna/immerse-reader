@@ -4,7 +4,8 @@ import {
   eventsLoaded,
   bookLoaded,
   setIdentifier,
-  setLocation
+  setLocation,
+  setFontSize
 } from '../actions';
 import Reader from '../components/Reader';
 
@@ -25,6 +26,9 @@ const mapDispatchToProps = dispatch => ({
   },
   setLocation: loc => {
     dispatch(setLocation(loc));
+  },
+  setFontSize: size => {
+    dispatch(setFontSize(size));
   }
 });
 const mapStateToProps = state => ({
@@ -32,7 +36,8 @@ const mapStateToProps = state => ({
   eventsLoaded: state.reader.eventsLoaded,
   location: state.reader.location,
   identifier: state.reader.identifier,
-  currentBook: state.books.currentBook
+  currentBook: state.books.currentBook,
+  fontSize: state.reader.fontSize
 });
 
 const ReaderContainer = connect(

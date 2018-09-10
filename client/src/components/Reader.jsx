@@ -1,11 +1,38 @@
 import React, { Component } from 'react';
 import { ReactReader } from '@sneakyechidna/react-reader';
+import { Button } from 'semantic-ui-react';
 
 class Reader extends Component {
+  rendition = null;
+
   selection = (e, contents) => {
     if (contents) {
       const { getDefinitions } = this.props;
       getDefinitions(contents.window.getSelection().toString());
+    }
+  };
+
+  getRendition = rendition => {
+    const { fontSize } = this.props;
+    this.rendition = rendition;
+    rendition.themes.fontSize(`${fontSize}%`);
+  };
+
+  onToggleFontSize = direction => {
+    if (direction === 'larger') {
+      const { fontSize, setFontSize } = this.props;
+      const nextSize = fontSize + 5;
+      setFontSize(nextSize);
+      this.setState({}, () => {
+        this.rendition.themes.fontSize(`${nextSize}%`);
+      });
+    } else {
+      const { fontSize, setFontSize } = this.props;
+      const nextSize = fontSize - 5;
+      setFontSize(nextSize);
+      this.setState({}, () => {
+        this.rendition.themes.fontSize(`${nextSize}%`);
+      });
     }
   };
 
@@ -24,7 +51,8 @@ class Reader extends Component {
   renderReader() {
     const {
       currentBook: { name },
-      currentBook: { book }
+      currentBook: { book },
+      setFontSize
     } = this.props;
 
     return (
@@ -33,6 +61,7 @@ class Reader extends Component {
         title={name}
         {...this.renderLocation()}
         locationChanged={this.locationChange}
+        getRendition={this.getRendition}
         renditionOn={this.customEvents}
       />
     );
@@ -48,6 +77,34 @@ class Reader extends Component {
           width: '100%'
         }}
       >
+        <Button
+          basic
+          size="mini"
+          compact
+          style={{
+            position: 'absolute',
+            zIndex: '2',
+            left: '30vw',
+            top: '20px'
+          }}
+          onClick={() => this.onToggleFontSize('larger')}
+        >
+          +
+        </Button>
+        <Button
+          basic
+          size="mini"
+          compact
+          style={{
+            position: 'absolute',
+            zIndex: '2',
+            right: '30vw',
+            top: '20px'
+          }}
+          onClick={() => this.onToggleFontSize('smaller')}
+        >
+          -
+        </Button>
         {currentBook && this.renderReader()}
       </div>
     );

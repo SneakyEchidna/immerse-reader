@@ -5,14 +5,16 @@ import {
   SET_IDENTIFIER,
   SET_LOCATION,
   OPEN_BOOK,
-  SIGN_OUT
+  SIGN_OUT,
+  SET_FONT_SIZE
 } from '../actions/actionTypes';
 
 const initialState = {
   bookLoaded: false,
   eventsLoaded: false,
   location: null,
-  identifier: null
+  identifier: null,
+  fontSize: 100
 };
 
 const readerReducer = (state = initialState, action) => {
@@ -32,6 +34,11 @@ const readerReducer = (state = initialState, action) => {
     case SIGN_OUT:
       return {
         ...initialState
+      };
+    case SET_FONT_SIZE:
+      return {
+        ...state,
+        fontSize: action.payload
       };
     default:
       return state;

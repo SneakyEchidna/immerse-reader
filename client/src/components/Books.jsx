@@ -31,7 +31,7 @@ class Books extends React.Component {
                   as="a"
                   onClick={() => {
                     openBook(book);
-                    setTimeout(history.push, 1000, '/');
+                    setTimeout(history.push, 1000, '/reader');
                   }}
                 >
                   {`${book.name} - ${book.author}`}

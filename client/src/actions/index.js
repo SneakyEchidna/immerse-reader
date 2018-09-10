@@ -18,7 +18,8 @@ import {
   OPEN_BOOK,
   OPEN_BOOK_SUCCESS,
   DELETE_BOOK,
-  TOGGLE_DEFINITION
+  TOGGLE_DEFINITION,
+  SET_FONT_SIZE
 } from './actionTypes';
 
 export const getDefinitions = word => ({
@@ -109,4 +110,9 @@ export const openBookSuccess = (name, author, book, key, bookmark) => ({
 export const deleteBook = key => ({
   type: DELETE_BOOK,
   payload: key
+});
+
+export const setFontSize = size => ({
+  type: SET_FONT_SIZE,
+  payload: size
 });
