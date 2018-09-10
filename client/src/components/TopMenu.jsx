@@ -11,14 +11,21 @@ export default class TopMenu extends Component {
     return false;
   }
 
-  state = { activeItem: 'home' };
+  state = { activeItem: 'reader' };
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   loginButton() {
     const { uid, signIn, signOut } = this.props;
     if (uid) {
-      return <Menu.Item name="log out" onClick={signOut} />;
+      return (
+        <Menu.Item
+          name="log out"
+          onClick={() => {
+            signOut();
+          }}
+        />
+      );
     }
     return <Menu.Item name="log in" onClick={signIn} />;
   }
@@ -32,9 +39,9 @@ export default class TopMenu extends Component {
             <React.Fragment>
               <Menu.Item
                 as={Link}
-                to="/"
-                name="home"
-                active={TopMenu.isActive('/')}
+                to="/reader"
+                name="reader"
+                active={TopMenu.isActive('/reader')}
                 onClick={this.handleItemClick}
               />
               <Menu.Item

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Loader } from 'semantic-ui-react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import TopMenu from '../containers/TopMenu';
 import 'semantic-ui-css/semantic.min.css';
@@ -12,19 +12,56 @@ class App extends React.Component {
   }
 
   render() {
+    const { uid } = this.props;
+    const loading = <Loader active />;
     const WordList = Loadable({
       loader: () => import('../containers/WordList'),
-      loading: () => <Loader active />
+      loading: () => loading
     });
     const ReaderWrapper = Loadable({
       loader: () => import('../containers/ReaderWrapper'),
-      loading: () => <Loader active />
+      loading: () => loading
     });
     const Books = Loadable({
       loader: () => import('../containers/Books'),
-      loading: () => <Loader active />
+      loading: () => loading
     });
-
+    const Welcome = Loadable({
+      loader: () => import('../components/Welcome'),
+      loading: () => loading
+    });
+    const PrivateRoute = ({ component: Component, ...rest }) => (
+      <Route
+        {...rest}
+        render={props =>
+          uid ? (
+            <Component {...props} />
+          ) : (
+            <Redirect
+              to={{
+                pathname: '/'
+              }}
+            />
+          )
+        }
+      />
+    );
+    const RedirectToBooks = ({ component: Component, ...rest }) => (
+      <Route
+        {...rest}
+        render={props =>
+          !uid ? (
+            <Component {...props} />
+          ) : (
+            <Redirect
+              to={{
+                pathname: '/books'
+              }}
+            />
+          )
+        }
+      />
+    );
     return (
       <Container fluid>
         <style>
@@ -40,9 +77,10 @@ class App extends React.Component {
 
         <TopMenu />
         <Switch>
-          <Route exact path="/" component={ReaderWrapper} />
-          <Route path="/wordlist" component={WordList} />
-          <Route path="/books" component={Books} />
+          <RedirectToBooks exact path="/" component={Welcome} />
+          <PrivateRoute path="/wordlist" component={WordList} />
+          <PrivateRoute path="/books" component={Books} />
+          <PrivateRoute path="/reader" component={ReaderWrapper} />
         </Switch>
       </Container>
     );
