@@ -1,11 +1,15 @@
 import { firebase } from '../firebase';
 
 export default class Db {
-  users = firebase.db.ref('/users/');
+  ref = firebase.db.ref();
+
+  users = this.ref.child('users');
 
   auth = firebase.auth;
 
   wordlists = firebase.db.ref('/wordlists/');
+
+  definitionsRef = this.ref.child('definitions');
 
   addUser = (uid, displayName, email, photoURL) => {
     const user = firebase.db.ref(`/users/${uid}`);
@@ -19,6 +23,15 @@ export default class Db {
       }
     });
   };
+
+  getWordFromStore = word =>
+    this.definitionsRef
+      .child(word)
+      .once('value')
+      .then(snapshot => {
+        const definitions = snapshot.val();
+        return definitions;
+      });
 
   addWord = (uid, word, definitions) => {
     firebase.db.ref(`/wordlists/${uid}/${word}`).set(definitions);
