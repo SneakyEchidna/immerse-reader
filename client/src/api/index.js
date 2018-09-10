@@ -39,9 +39,12 @@ export default class Db {
 
 export class Storage {
   addBook = (uid, { name, author, file }) => {
+    const metadata = {
+      cacheControl: 'private,max-age=31536000'
+    };
     firebase.storage
       .ref(`/books/${uid}/${name}_${author}.epub`)
-      .put(file)
+      .put(file, metadata)
 
       .then(() =>
         firebase.db
