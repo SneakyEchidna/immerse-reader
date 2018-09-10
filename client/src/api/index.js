@@ -62,7 +62,7 @@ export class Storage {
       .then(() =>
         firebase.db
           .ref(`/users/${uid}/books/${name}_${author}`)
-          .set({ name, author }, metadata)
+          .set({ name, author })
       );
   };
 
