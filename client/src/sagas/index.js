@@ -7,6 +7,7 @@ import {
 import { setDefinitions, setLocation, toggleDefinition } from '../actions';
 import { signInSaga, signOutSaga } from './auth';
 import appStartedSaga from './appStartedSaga';
+import Db from '../api';
 import { addToWordListSaga, loadWordListSaga } from './wordlist';
 import {
   loadBooksListSaga,
@@ -16,25 +17,34 @@ import {
   saveBookmarkSaga
 } from './books';
 import { getKey } from '../reducers/booksReducer';
+import { getDefinitionState } from '../reducers/definitionReducer';
 
+const db = new Db();
 function* callGetDefinitions({ payload }) {
   const callApi = async word => {
-    const response = await fetch(`/api/definitions/${word}`).catch(() => [
-      `No exact matches found for "${word}"`
-    ]);
-    let body = response;
-    try {
-      body = await response.json();
-    } catch (e) {
-      body = [`No exact matches found for "${word}"`];
+    let body;
+    const firebaseRes = db.getWordFromStore(word);
+    body = await firebaseRes;
+    if (!body) {
+      const response = await fetch(`/api/definitions/${word}`).catch(() => [
+        `No exact matches found for "${word}"`
+      ]);
+      body = response;
+      try {
+        body = await response.json();
+      } catch (error) {
+        body = [`No exact matches found for "${word}"`];
+      }
     }
-
     return body;
   };
 
   const def = yield callApi(payload);
   yield put(setDefinitions(payload, def));
-  yield put(toggleDefinition());
+  const isOpen = yield select(getDefinitionState);
+  if (!isOpen) {
+    yield put(toggleDefinition());
+  }
 }
 
 function* callSetLocation({ payload }) {
