@@ -1,9 +1,7 @@
 import React from 'react';
-import { Container } from 'semantic-ui-react';
+import { Container, Loader } from 'semantic-ui-react';
 import { Route, Switch } from 'react-router-dom';
-import ReaderWrapper from '../containers/ReaderWrapper';
-import WordList from '../containers/WordList';
-import Books from '../containers/Books';
+import Loadable from 'react-loadable';
 import TopMenu from '../containers/TopMenu';
 import 'semantic-ui-css/semantic.min.css';
 
@@ -14,6 +12,19 @@ class App extends React.Component {
   }
 
   render() {
+    const WordList = Loadable({
+      loader: () => import('../containers/WordList'),
+      loading: () => <Loader active />
+    });
+    const ReaderWrapper = Loadable({
+      loader: () => import('../containers/ReaderWrapper'),
+      loading: () => <Loader active />
+    });
+    const Books = Loadable({
+      loader: () => import('../containers/Books'),
+      loading: () => <Loader active />
+    });
+
     return (
       <Container fluid>
         <style>
