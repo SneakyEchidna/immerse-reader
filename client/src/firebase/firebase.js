@@ -1,4 +1,7 @@
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
+import 'firebase/database';
+import 'firebase/storage';
+import 'firebase/auth';
 import config from './config';
 
 if (!firebase.apps.length) {
