@@ -36,5 +36,6 @@ const definitionReducer = (state = initialState, action) => {
       return state;
   }
 };
+export const getDefinitionState = state => state.definition.showDefinition;
 
 export default definitionReducer;

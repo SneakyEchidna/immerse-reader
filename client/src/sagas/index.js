@@ -17,6 +17,7 @@ import {
   saveBookmarkSaga
 } from './books';
 import { getKey } from '../reducers/booksReducer';
+import { getDefinitionState } from '../reducers/definitionReducer';
 
 const db = new Db();
 function* callGetDefinitions({ payload }) {
@@ -40,7 +41,10 @@ function* callGetDefinitions({ payload }) {
 
   const def = yield callApi(payload);
   yield put(setDefinitions(payload, def));
-  yield put(toggleDefinition());
+  const isOpen = yield select(getDefinitionState);
+  if (!isOpen) {
+    yield put(toggleDefinition());
+  }
 }
 
 function* callSetLocation({ payload }) {
