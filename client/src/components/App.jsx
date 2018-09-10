@@ -9,6 +9,10 @@ class App extends React.Component {
   componentDidMount() {
     const { appStarted } = this.props;
     appStarted();
+    fetch('http://localhost:8765', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'deckNames', version: 6 })
+    }).then(e => console.log(e.json()));
   }
 
   render() {
