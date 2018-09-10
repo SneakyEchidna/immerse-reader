@@ -44,7 +44,7 @@ export class Storage {
     };
     firebase.storage
       .ref(`/books/${uid}/${name}_${author}.epub`)
-      .put(file)
+      .put(file, metadata)
 
       .then(() =>
         firebase.db
