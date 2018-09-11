@@ -16,6 +16,7 @@ class BookUpload extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
+
     const { name, author } = this.state;
     const { uploadBook } = this.props;
     const book = {
@@ -24,7 +25,7 @@ class BookUpload extends React.Component {
       file: this.fileRef.current.files[0]
     };
     uploadBook(book);
-    this.setState({ author: '', name: '' });
+    event.target.reset();
   };
 
   render() {
