@@ -42,8 +42,11 @@ class Reader extends Component {
   ];
 
   locationChange = epubcfi => {
-    const { setLocation } = this.props;
-    setLocation(epubcfi);
+    const {
+      setLocation,
+      currentBook: { name }
+    } = this.props;
+    name && setLocation(epubcfi);
   };
 
   renderLocation() {
