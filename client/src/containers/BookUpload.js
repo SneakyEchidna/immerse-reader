@@ -7,8 +7,11 @@ const mapDispatchToProps = dispatch => ({
     dispatch(uploadBook(data));
   }
 });
+const mapStateToProps = state => ({
+  loading: state.books.loading
+});
 const BookUploadContainer = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(BookUpload);
 

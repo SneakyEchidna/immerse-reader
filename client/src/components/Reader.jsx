@@ -51,8 +51,7 @@ class Reader extends Component {
   renderReader() {
     const {
       currentBook: { name },
-      currentBook: { book },
-      setFontSize
+      currentBook: { book }
     } = this.props;
 
     return (

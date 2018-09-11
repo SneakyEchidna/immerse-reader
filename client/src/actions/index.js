@@ -19,7 +19,8 @@ import {
   OPEN_BOOK_SUCCESS,
   DELETE_BOOK,
   TOGGLE_DEFINITION,
-  SET_FONT_SIZE
+  SET_FONT_SIZE,
+  UPLOAD_BOOK_SUCCESS
 } from './actionTypes';
 
 export const getDefinitions = word => ({
@@ -95,6 +96,10 @@ export const setBooksList = booksList => ({
 export const uploadBook = data => ({
   type: UPLOAD_BOOK,
   payload: data
+});
+
+export const uploadBookSuccess = () => ({
+  type: UPLOAD_BOOK_SUCCESS
 });
 
 export const openBook = book => ({

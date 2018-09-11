@@ -1,3 +1,4 @@
+import uuid from 'uuid';
 import { firebase } from '../firebase';
 
 export default class Db {
@@ -55,14 +56,12 @@ export class Storage {
     const metadata = {
       cacheControl: 'private,max-age=31536000'
     };
-    firebase.storage
-      .ref(`/books/${uid}/${name}_${author}.epub`)
+    const id = uuid();
+    return firebase.storage
+      .ref(`/books/${uid}/${id}.epub`)
       .put(file, metadata)
-
       .then(() =>
-        firebase.db
-          .ref(`/users/${uid}/books/${name}_${author}`)
-          .set({ name, author })
+        firebase.db.ref(`/users/${uid}/books/${id}`).set({ name, author })
       );
   };
 
@@ -81,13 +80,12 @@ export class Storage {
         console.log(error);
       });
 
-  deleteBook = (uid, key) => {
+  deleteBook = (uid, key) =>
     firebase.storage
       .ref(`/books/${uid}/${key}.epub`)
       .delete()
       .then(() => firebase.db.ref(`/users/${uid}/books/${key}`).remove())
       .catch(e => console.log(e));
-  };
 
   saveBookmark = (uid, key, bookmark) => {
     firebase.db

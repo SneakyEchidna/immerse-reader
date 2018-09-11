@@ -15,6 +15,7 @@ export const SET_WORD_LIST = 'SET_WORD_LIST';
 export const LOAD_BOOKS_LIST = 'LOAD_BOOKS_LIST';
 export const SET_BOOKS_LIST = 'SET_BOOKS_LIST';
 export const UPLOAD_BOOK = 'UPLOAD_BOOK';
+export const UPLOAD_BOOK_SUCCESS = 'UPLOAD_BOOK_SUCCESS';
 export const OPEN_BOOK = 'OPEN_BOOK';
 export const OPEN_BOOK_SUCCESS = 'OPEN_BOOK_SUCCESS';
 export const DELETE_BOOK = 'DELETE_BOOK';
