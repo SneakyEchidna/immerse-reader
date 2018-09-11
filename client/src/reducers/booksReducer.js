@@ -3,13 +3,15 @@ import {
   SIGN_OUT,
   OPEN_BOOK_SUCCESS,
   UPLOAD_BOOK,
-  UPLOAD_BOOK_SUCCESS
+  UPLOAD_BOOK_SUCCESS,
+  TOGGLE_BOOK_UPLOAD
 } from '../actions/actionTypes';
 
 const initialState = {
   booksList: [],
   currentBook: null,
-  loading: false
+  loading: false,
+  showBookUpload: false
 };
 
 const booksReducer = (state = initialState, action) => {
@@ -29,6 +31,11 @@ const booksReducer = (state = initialState, action) => {
           key: action.payload.key,
           bookmark: action.payload.bookmark
         }
+      };
+    case TOGGLE_BOOK_UPLOAD:
+      return {
+        ...state,
+        showBookUpload: !state.showBookUpload
       };
     case UPLOAD_BOOK:
       return {

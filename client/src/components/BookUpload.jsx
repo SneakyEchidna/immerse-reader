@@ -29,9 +29,9 @@ class BookUpload extends React.Component {
 
   render() {
     const { name, author } = this.state;
-    const {loading} = this.props
+    const { loading } = this.props;
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.handleSubmit} inverted>
         <Form.Group grouped>
           <Form.Input
             label="Book name"
