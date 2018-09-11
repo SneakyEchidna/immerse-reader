@@ -41,12 +41,7 @@ class Books extends React.Component {
           {booksList.map(book => (
             <List.Item key={book.key} name={book.name} author={book.author}>
               <List.Content floated="right">
-                <Button
-                  onClick={() => deleteBook(book.key)}
-                  negative
-                  compact
-                  circular
-                >
+                <Button onClick={() => deleteBook(book.key)} negative compact>
                   x
                 </Button>
               </List.Content>
