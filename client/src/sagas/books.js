@@ -1,5 +1,4 @@
 import { takeEvery, select, put, take } from 'redux-saga/effects';
-import { delay } from 'redux-saga';
 import { getUid } from '../reducers/userReducer';
 import {
   LOAD_BOOKS_LIST,
@@ -13,7 +12,8 @@ import {
   setBooksList,
   loadBooksList,
   openBookSuccess,
-  setLocation
+  setLocation,
+  uploadBookSuccess
 } from '../actions';
 import { Storage } from '../api';
 import { getKey } from '../reducers/booksReducer';
@@ -53,7 +53,7 @@ function* callUploadBook({ payload }) {
   } catch (e) {
     console.log(e);
   }
-  yield delay(2000);
+  yield put(uploadBookSuccess());
   yield put(loadBooksList());
 }
 function* callOpenBook({ payload }) {
@@ -89,7 +89,6 @@ function* callDeleteBook({ payload }) {
   } catch (e) {
     console.log(e);
   }
-  yield delay(1000);
   yield put(loadBooksList());
 }
 function* callSaveBookmark({ payload }) {

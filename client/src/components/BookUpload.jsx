@@ -29,6 +29,7 @@ class BookUpload extends React.Component {
 
   render() {
     const { name, author } = this.state;
+    const {loading} = this.props
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Group grouped>
@@ -56,7 +57,7 @@ class BookUpload extends React.Component {
             required
           />
         </Form.Group>
-        <Form.Button>Upload</Form.Button>
+        <Form.Button loading={loading}>Upload</Form.Button>
       </Form>
     );
   }
