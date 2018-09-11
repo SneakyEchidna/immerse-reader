@@ -60,7 +60,6 @@ export class Storage {
     return firebase.storage
       .ref(`/books/${uid}/${id}.epub`)
       .put(file, metadata)
-
       .then(() =>
         firebase.db.ref(`/users/${uid}/books/${id}`).set({ name, author })
       );
