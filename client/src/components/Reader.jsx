@@ -36,7 +36,10 @@ class Reader extends Component {
     }
   };
 
-  customEvents = [{ event: 'selected', callback: this.selection }];
+  customEvents = [
+    { event: 'selected', callback: this.selection },
+    { event: 'click', callback: this.props.sidebarEvent }
+  ];
 
   locationChange = epubcfi => {
     const { setLocation } = this.props;

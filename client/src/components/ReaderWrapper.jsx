@@ -49,7 +49,7 @@ class ReaderWrapper extends Component {
               padding: '0'
             }}
           >
-            <Reader />
+            <Reader sidebarEvent={this.handleClickOutside} />
           </Segment>
         </Sidebar.Pusher>
       </Sidebar.Pushable>
