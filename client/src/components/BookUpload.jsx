@@ -16,6 +16,7 @@ class BookUpload extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
+
     const { name, author } = this.state;
     const { uploadBook } = this.props;
     const book = {
@@ -25,13 +26,14 @@ class BookUpload extends React.Component {
     };
     uploadBook(book);
     this.setState({ author: '', name: '' });
+    event.target.reset();
   };
 
   render() {
     const { name, author } = this.state;
-    const {loading} = this.props
+    const { loading } = this.props;
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.handleSubmit} inverted>
         <Form.Group grouped>
           <Form.Input
             label="Book name"

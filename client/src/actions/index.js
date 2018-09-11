@@ -20,7 +20,8 @@ import {
   DELETE_BOOK,
   TOGGLE_DEFINITION,
   SET_FONT_SIZE,
-  UPLOAD_BOOK_SUCCESS
+  UPLOAD_BOOK_SUCCESS,
+  TOGGLE_BOOK_UPLOAD
 } from './actionTypes';
 
 export const getDefinitions = word => ({
@@ -93,6 +94,9 @@ export const setBooksList = booksList => ({
   payload: booksList
 });
 
+export const toggleBookUpload = () => ({
+  type: TOGGLE_BOOK_UPLOAD
+});
 export const uploadBook = data => ({
   type: UPLOAD_BOOK,
   payload: data

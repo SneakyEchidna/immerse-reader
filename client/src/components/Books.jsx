@@ -1,12 +1,37 @@
 import React from 'react';
-import { List, Icon, Grid, Button, Container } from 'semantic-ui-react';
+import {
+  List,
+  Icon,
+  Button,
+  Sidebar,
+  Segment,
+  Container
+} from 'semantic-ui-react';
 import BookUpload from '../containers/BookUpload';
 
 class Books extends React.Component {
+  sidebarRef = React.createRef();
+
   componentDidMount() {
     const { loadBooksList } = this.props;
+    window.addEventListener('mousedown', this.handleClickOutside);
     loadBooksList();
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
+  handleClickOutside = event => {
+    const { toggleBookUpload, showBookUpload } = this.props;
+    if (
+      showBookUpload &&
+      this.sidebarRef &&
+      !this.sidebarRef.current.ref.contains(event.target)
+    ) {
+      toggleBookUpload();
+    }
+  };
 
   renderBookslist() {
     const { booksList, openBook, deleteBook, history } = this.props;
@@ -16,12 +41,7 @@ class Books extends React.Component {
           {booksList.map(book => (
             <List.Item key={book.key} name={book.name} author={book.author}>
               <List.Content floated="right">
-                <Button
-                  onClick={() => deleteBook(book.key)}
-                  negative
-                  compact
-                  circular
-                >
+                <Button onClick={() => deleteBook(book.key)} negative compact>
                   x
                 </Button>
               </List.Content>
@@ -50,13 +70,35 @@ class Books extends React.Component {
   }
 
   render() {
+    const { showBookUpload, toggleBookUpload } = this.props;
     return (
-      <Grid divided as={Container} style={{ paddingTop: '10px' }}>
-        <Grid.Column width={11}>{this.renderBookslist()}</Grid.Column>
-        <Grid.Column width={5}>
+      <Sidebar.Pushable as={Segment} vertical>
+        <Sidebar
+          as={Segment}
+          animation="overlay"
+          icon="labeled"
+          inverted
+          direction="right"
+          visible={showBookUpload}
+          ref={this.sidebarRef}
+        >
           <BookUpload />
-        </Grid.Column>
-      </Grid>
+        </Sidebar>
+        <Sidebar.Pusher>
+          <Segment
+            as={Container}
+            basic
+            style={{
+              height: '100vh',
+              width: '100vw',
+              padding: '10px 0 0 0'
+            }}
+          >
+            <Button onClick={toggleBookUpload}>Upload Book</Button>
+            {this.renderBookslist()}
+          </Segment>
+        </Sidebar.Pusher>
+      </Sidebar.Pushable>
     );
   }
 }
